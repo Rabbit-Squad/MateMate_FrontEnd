@@ -4,8 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_margin="10dp"
     app:cardBackgroundColor="#FFFFFF"
-    app:cardCornerRadius="10dp"
+    app:cardCornerRadius="15dp"
     app:cardElevation="5dp">
 
     <LinearLayout
@@ -64,7 +65,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/location"></ImageView>
+                android:background="@drawable/location">
+            </ImageView>
 
             <TextView
                 android:id="@+id/post_location"
@@ -83,19 +85,20 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="10dp">
 
-            <TextView
-                android:id="@+id/member_icon"
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="인원수">
-            </TextView>
+                android:layout_marginRight="30dp"
+                android:background="@drawable/people">
+            </ImageView>
 
             <TextView
                 android:id="@+id/member_num"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1/4"
-                android:layout_marginLeft="30dp"></TextView>
+                android:textSize="20sp">
+            </TextView>
         </LinearLayout>
 
         <!-- 시간 + 참가하기 버튼-->
@@ -104,6 +107,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp"
             android:layout_marginLeft="10dp">
 
             <TextView
@@ -111,6 +115,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="4"
+                android:textSize="20sp"
                 android:text="15:00">
             </TextView>
 
