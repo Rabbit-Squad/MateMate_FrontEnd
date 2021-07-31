@@ -7,6 +7,7 @@ android {
         applicationId "org.matemate"
         minSdkVersion 15
         targetSdkVersion 29
+        vectorDrawables.useSupportLibrary = true
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
