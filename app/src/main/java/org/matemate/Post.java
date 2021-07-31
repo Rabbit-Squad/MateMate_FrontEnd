@@ -4,16 +4,18 @@ public class Post {
     String name;
     String title;
     String location;
+    String time;
     int curNum;
     int minNum;
     boolean closed;
 
-    public Post(String name, String title, String location, int curNum, int minNum, boolean closed) {
+    public Post(String name, String title, String location, int curNum, int minNum, String time, boolean closed) {
         this.name = name;
         this.title = title;
         this.location = location;
         this.curNum = curNum;
         this.minNum = minNum;
+        this.time = time;
         this.closed = closed;
     }
 

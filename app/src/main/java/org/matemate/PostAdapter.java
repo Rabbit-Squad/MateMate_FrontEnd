@@ -18,7 +18,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 }
 
                 public void setPost(Post post) {
+                        posts.add(post);
+                }
 
+                public Post getPost(int position) {
+                        return posts.get(position);
                 }
         }
 
@@ -38,8 +42,10 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
         @Override
         public int getItemCount() {
-                return 0;
+                return posts.size();
         }
 
-
+        public void addPost(Post post) {
+                posts.add(post);
+        }
 }
