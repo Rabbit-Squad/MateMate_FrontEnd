@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/my_posts"
+            android:title="내 글 목록">
+        </item>
+
+        <item
+            android:id="@+id/my_account"
+            android:title="내 계정">
+        </item>
+
+        <item
+            android:id="@+id/setting"
+            android:title="환경설정">
+        </item>
+    </group>
+</menu>
