@@ -67,4 +67,6 @@ public class Post {
         this.closed = closed;
     }
 
+    public String getTime() {return time; }
+
 }

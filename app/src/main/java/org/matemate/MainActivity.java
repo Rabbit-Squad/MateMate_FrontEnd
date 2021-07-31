@@ -37,5 +37,6 @@ public class MainActivity extends AppCompatActivity {
         adapter.addPost(new Post("피바", "밥 먹읍시다. ", "작은도쿄", 1,2, "15:30",false));
         adapter.addPost(new Post("쭈니", "어차피", "윈도", 1, 8, "21:00", true));
         recyclerView.setAdapter(adapter);
+        System.out.println(adapter.getItemCount());
     }
 }

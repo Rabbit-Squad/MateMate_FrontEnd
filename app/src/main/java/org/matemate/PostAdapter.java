@@ -3,22 +3,40 @@ package org.matemate;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         ArrayList<Post> posts = new ArrayList<Post>();
 
+        TextView writer_name;
+        TextView title;
+        TextView location;
+        TextView time;
+        TextView member;
         public class ViewHolder extends RecyclerView.ViewHolder {
                 public ViewHolder(@NonNull View itemView) {
                         super(itemView);
+                        writer_name = itemView.findViewById(R.id.writer_name);
+                        title = itemView.findViewById(R.id.post_title);
+                        location = itemView.findViewById(R.id.post_location);
+                        time = itemView.findViewById(R.id.meeting_time);
+                        member = itemView.findViewById(R.id.member_num);
                 }
 
                 public void setPost(Post post) {
                         posts.add(post);
+                        writer_name.setText(post.getName());
+                        title.setText(post.getTitle());
+                        location.setText(post.getLocation());
+                        time.setText(post.getTime());
+                        member.setText(post.getCurNum() + " / "+post.getMinNum());
                 }
 
                 public Post getPost(int position) {
@@ -30,7 +48,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         @Override
         public PostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
                 LayoutInflater inflater = LayoutInflater.from(viewGroup.getContext());
-                View postView = inflater.inflate(R.layout.activity_main, viewGroup, false);
+                View postView = inflater.inflate(R.layout.post_item, viewGroup, false);
                 return new ViewHolder(postView);
         }
 
