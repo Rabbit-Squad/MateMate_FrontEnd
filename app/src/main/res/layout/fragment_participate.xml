@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:gravity="center_horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ParticipateFragment">
+
+    <!-- 신청 대상 글 세부 정보 -->
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/round_sqaure"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/participate_profile_img"
+                android:layout_width="45dp"
+                android:layout_height="45dp">
+
+            </ImageView>
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_width="240dp"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/participate_nickname"
+                    android:text="닉네임"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:id="@+id/participate_title"
+                    android:text="타이틀"
+                    android:textColor="#000000"
+                    android:textSize="20sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/edit_report_btn"
+                android:text="신고"
+                android:textStyle="bold"
+                android:textColor="#FF0000"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                app:srcCompat="@drawable/location"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+            <TextView
+                android:id="@+id/participate_location"
+                android:layout_marginLeft="10dp"
+                android:text="청파동 어딘가"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                app:srcCompat="@drawable/people"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+            <TextView
+                android:id="@+id/participate_people"
+                android:layout_marginLeft="10dp"
+                android:text="1/2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/participate_text"
+            android:background="@drawable/edit_background"
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <!-- 신청 정보 작성 -->
+
+    <LinearLayout
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/round_sqaure"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                app:srcCompat="@drawable/location"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+            <EditText
+                android:id="@+id/participate_edit_location"
+                android:layout_marginLeft="10dp"
+                android:text="청파동 어딘가"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:gravity="center|left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                app:srcCompat="@drawable/ic_clock"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:text="예상도착시간"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <EditText
+                android:id="@+id/participate_edit_time"
+                android:hint="10"
+                android:layout_width="60dp"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:text="분"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center|left"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                app:srcCompat="@drawable/ic_messenger"
+                android:layout_width="25dp"
+                android:layout_height="25dp"/>
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:text="신청 메시지"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/participate_edit_text"
+            android:background="@drawable/edit_background"
+            android:inputType="textMultiLine|textNoSuggestions"
+            android:gravity="top"
+            android:padding="10dp"
+            android:hint="금방 갑니다!"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/participate_submit_btn"
+            android:text="신청 하기"
+            android:background="@drawable/button"
+            android:layout_marginRight="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/participate_cancel_btn"
+            android:text="취소 하기"
+            android:background="@drawable/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+</LinearLayout>
