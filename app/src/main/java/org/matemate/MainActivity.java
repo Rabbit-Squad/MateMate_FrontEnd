@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -33,6 +35,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        FloatingActionButton addPost = findViewById(R.id.add_post);
+        addPost.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                setContentView(R.layout.fragment_edit);
+            }
+        });
 
         adapter.addPost(new Post("피바", "밥 먹읍시다. ", "작은도쿄", 1,2, "15:30",false));
         adapter.addPost(new Post("쭈니", "어차피", "윈도", 1, 8, "21:00", true));
