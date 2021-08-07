@@ -2,7 +2,9 @@ package org.matemate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -16,6 +18,8 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox remember_check;
     TextView createAccount;
 
+    public static final int REQUEST_CREATE_ACCOUNT = 101;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +31,21 @@ public class LoginActivity extends AppCompatActivity {
         remember_check = findViewById(R.id.login_remember_account);
         createAccount = findViewById(R.id.login_sign_up);
 
+        loginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //
+            }
+        });
+
+        //회원가입 버튼 - 회원가입 띄움
+        createAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+                startActivityForResult(intent, REQUEST_CREATE_ACCOUNT);
+            }
+        });
     }
 
 }
