@@ -77,7 +77,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                app:srcCompat="@drawable/location"
+                app:srcCompat="@drawable/ic_maps_and_flags"
                 android:layout_width="25dp"
                 android:layout_height="25dp"/>
 
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                app:srcCompat="@drawable/people"
+                app:srcCompat="@drawable/ic_group"
                 android:layout_width="25dp"
                 android:layout_height="25dp"/>
 
@@ -138,7 +138,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                app:srcCompat="@drawable/location"
+                app:srcCompat="@drawable/ic_maps_and_flags"
                 android:layout_width="25dp"
                 android:layout_height="25dp"/>
 

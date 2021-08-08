@@ -34,7 +34,7 @@
 
             <ImageView
                 android:id="@+id/ic_edit_location"
-                app:srcCompat="@drawable/location"
+                app:srcCompat="@drawable/ic_maps_and_flags"
                 android:layout_marginTop="10dp"
                 android:layout_width="25dp"
                 android:layout_height="25dp"/>
