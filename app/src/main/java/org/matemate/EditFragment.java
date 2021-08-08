@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,13 +15,12 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 public class EditFragment extends Fragment {
 
     EditText title_input;
     EditText location_input;
-    EditText time_input;
-    EditText min_num_input;
     EditText text_input;
 
     @Override
@@ -34,8 +34,6 @@ public class EditFragment extends Fragment {
     private void initUI(ViewGroup rootView) {
         title_input = rootView.findViewById(R.id.edit_title);
         location_input = rootView.findViewById(R.id.edit_location);
-        time_input = rootView.findViewById(R.id.edit_time);
-        min_num_input = rootView.findViewById(R.id.edit_min_num);
         text_input = rootView.findViewById(R.id.edit_text);
     }
 }

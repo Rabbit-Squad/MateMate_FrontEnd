@@ -2,6 +2,7 @@ package org.matemate;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,12 +11,13 @@ import android.text.Layout;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class MainActivity extends AppCompatActivity {
-
+    EditFragment editFragment = new EditFragment();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,18 +37,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        FloatingActionButton addPost = findViewById(R.id.add_post);
+        final FloatingActionButton addPost = findViewById(R.id.add_post);
         addPost.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                setContentView(R.layout.fragment_edit);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, editFragment).commit();
             }
         });
 
         adapter.addPost(new Post("피바", "밥 먹읍시다. ", "작은도쿄", 1,2, "15:30",false));
         adapter.addPost(new Post("쭈니", "어차피", "윈도", 1, 8, "21:00", true));
         recyclerView.setAdapter(adapter);
-        System.out.println(adapter.getItemCount());
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        getSupportFragmentManager().beginTransaction().remove(editFragment).commit();
+        getSupportFragmentManager().popBackStack();
     }
 }
