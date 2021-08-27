@@ -3,13 +3,20 @@ package org.matemate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -18,6 +25,8 @@ public class LoginActivity extends AppCompatActivity {
     Button loginBtn;
     CheckBox remember_check;
     TextView createAccount;
+    private ServiceApi serviceApi = RetrofitClient.getClient().create(ServiceApi.class);
+    ;
 
     public static final int REQUEST_CODE_CREATE_ACCOUNT = 101;
     public static final int REQUEST_CODE_MAIN = 201;
@@ -42,11 +51,12 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
                 }
                 else if (idInput.length() != 0 && pwInput.length() != 0)
-                {
+                {   /*
                     //로그인 성공~~
-                    Toast.makeText(LoginActivity.this, "로그인하였습니다.", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivityForResult(intent, REQUEST_CODE_MAIN);
+                    Toast.makeText(LoginActivity.this, "로그인하였습니다.", Toast.LENGTH_SHORT).show();*/
+                    String id = idInput.getText().toString();
+                    String pw = pwInput.getText().toString();
+                    startLogin(new LoginData(id, pw));
                 }
             }
         });
@@ -61,4 +71,38 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void startLogin(LoginData loginData) {
+        serviceApi.userLogin(loginData).enqueue(new Callback<LoginResponse>() {
+            @Override
+            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                LoginResponse result = response.body();
+                System.out.println(response.toString());
+                try {
+                    if (result.getStatus() == 200) {
+                        SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        //editor.putInt("userIdx", result.getUserIdx());
+                        editor.putString("token", result.getToken());
+                        editor.commit();
+                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                        startActivityForResult(intent, REQUEST_CODE_MAIN);
+                    }
+                    else if (result.getStatus() == 204) {
+                        Toast.makeText(getApplicationContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }catch (Exception e){
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Login fail", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<LoginResponse> call, Throwable t) {
+                Toast.makeText(getApplicationContext(), "로그인 에러 발생", Toast.LENGTH_SHORT).show();
+                Log.e("로그인 에러", t.getMessage());
+                t.printStackTrace();
+            }
+        });
+    }
 }
