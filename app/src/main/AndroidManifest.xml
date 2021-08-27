@@ -20,6 +20,12 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".SignUpActivity"/>
+        <meta-data
+            android:name="server_url"
+            android:value="app.BuildConfig.server_url">
+        </meta-data>
     </application>
+
+    <permission android:name="android.permission.INTERNET"/>
 
 </manifest>
