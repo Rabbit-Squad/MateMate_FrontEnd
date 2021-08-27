@@ -30,7 +30,7 @@
         android:layout_marginTop="100dp"
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
-        android:text="아이디"
+        android:text="이메일"
         android:textSize="15sp"
         />
 
