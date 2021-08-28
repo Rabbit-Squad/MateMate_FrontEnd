@@ -64,8 +64,8 @@
             android:layout_marginLeft="10dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginRight="30dp"
                 android:background="@drawable/ic_maps_and_flags">
             </ImageView>
@@ -88,8 +88,8 @@
             android:layout_marginLeft="10dp">
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
                 android:layout_marginRight="30dp"
                 android:background="@drawable/ic_group">
             </ImageView>
@@ -125,9 +125,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:layout_marginBottom="10dp"
                 android:background="@drawable/join_button"
                 android:text="참가하기">
-
             </Button>
         </LinearLayout>
 

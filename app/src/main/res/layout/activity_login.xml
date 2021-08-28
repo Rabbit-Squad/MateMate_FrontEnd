@@ -37,11 +37,12 @@
     <EditText
         android:id="@+id/login_id"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:textSize="20sp"
         android:inputType="text"
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
+        android:padding="5dp"
         android:background="@drawable/edit_background_square" />
 
     <TextView
@@ -60,7 +61,8 @@
         android:textSize="20sp"
         android:inputType="textPassword"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:padding="5dp"
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
         />

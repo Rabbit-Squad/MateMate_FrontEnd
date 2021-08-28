@@ -77,6 +77,7 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
                 LoginResponse result = response.body();
                 System.out.println(response.toString());
+                System.out.println(result.getStatus());
                 try {
                     if (result.getStatus() == 200) {
                         SharedPreferences sharedPreferences = getSharedPreferences("login", MODE_PRIVATE);
@@ -84,6 +85,9 @@ public class LoginActivity extends AppCompatActivity {
                         //editor.putInt("userIdx", result.getUserIdx());
                         editor.putString("token", result.getToken());
                         editor.commit();
+
+                        System.out.println("Try to open main Activity...");
+
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivityForResult(intent, REQUEST_CODE_MAIN);
                     }

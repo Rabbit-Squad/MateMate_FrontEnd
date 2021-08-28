@@ -3,7 +3,7 @@ package org.matemate;
 import com.google.gson.annotations.SerializedName;
 
 public class LoginResponse {
-    @SerializedName("status")
+    @SerializedName("code")
     private int status;
 
     @SerializedName("message")
