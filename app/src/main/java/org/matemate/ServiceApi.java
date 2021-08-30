@@ -15,4 +15,7 @@ public interface ServiceApi {
 
     @POST("/join")
     Call<JoinResponse> userJoin(@Body JoinData data);
+
+    @POST("/post")
+    Call<PostResponse> addPost(@Body NewPostData data);
 }
