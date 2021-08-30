@@ -6,6 +6,9 @@ public class LoginResponse {
     @SerializedName("code")
     private int status;
 
+    @SerializedName("userIdx")
+    private int userIdx;
+
     @SerializedName("message")
     private String message;
 
@@ -14,6 +17,10 @@ public class LoginResponse {
 
     public String getMessage() {
         return message;
+    }
+
+    public int getUserIdx() {
+        return userIdx;
     }
 
     public int getStatus() {
