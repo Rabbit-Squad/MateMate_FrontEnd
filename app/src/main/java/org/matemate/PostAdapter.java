@@ -11,16 +11,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
-        ArrayList<Post> posts = new ArrayList<Post>();
+        List<Post> posts;
 
         TextView writer_name;
         TextView title;
         TextView location;
         TextView time;
         TextView member;
+
+        public PostAdapter(List<Post>posts) {
+                this.posts = posts;
+        }
+
         public class ViewHolder extends RecyclerView.ViewHolder {
+
                 public ViewHolder(@NonNull View itemView) {
                         super(itemView);
                         writer_name = itemView.findViewById(R.id.writer_name);
@@ -32,11 +39,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
 
                 public void setPost(Post post) {
                         posts.add(post);
-                        writer_name.setText(post.getName());
+                        writer_name.setText(post.getNickname());
                         title.setText(post.getTitle());
                         location.setText(post.getLocation());
-                        time.setText(post.getTime());
-                        member.setText(post.getCurNum() + " / "+post.getMinNum());
+                        time.setText(post.getDeadline().toString());
+                        member.setText(post.getCur_num() + " / "+post.getMin_num());
                 }
 
                 public Post getPost(int position) {
@@ -62,8 +69,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         public int getItemCount() {
                 return posts.size();
         }
-
+        public Post getPost(int position) {
+                return posts.get(position);
+        }
         public void addPost(Post post) {
                 posts.add(post);
         }
+        public void setPosts (List<Post> posts) { this.posts = posts; }
 }

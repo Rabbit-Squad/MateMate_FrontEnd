@@ -18,4 +18,7 @@ public interface ServiceApi {
 
     @POST("/post")
     Call<PostResponse> addPost(@Body NewPostData data);
+
+    @GET("/list")
+    Call<ListResponse> getList();
 }

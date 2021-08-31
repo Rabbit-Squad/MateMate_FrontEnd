@@ -5,13 +5,12 @@ import com.google.gson.annotations.SerializedName;
 import java.sql.Time;
 import java.sql.Timestamp;
 
-public class Post {
-    /*
+public class ListData {
     @SerializedName("nickname")
     private String nickname;
 
     @SerializedName("deadline")
-    private String deadline;
+    private Timestamp deadline;
 
     @SerializedName("location")
     private String location;
@@ -30,18 +29,8 @@ public class Post {
 
     @SerializedName("closed")
     private int closed;
-*/
 
-    String nickname;
-    String title;
-    String deadline;
-    String location;
-    String content;
-    int min_num;
-    int cur_num;
-    int closed;
-
-    public Post(String nickname, String deadline, String location, int min_num, int cur_num, String title, String content, int closed) {
+    public ListData(String nickname, Timestamp deadline, String location, int min_num, int cur_num, String title, String content, int closed) {
         this.nickname = nickname;
         this.deadline = deadline;
         this.location = location;
@@ -56,7 +45,7 @@ public class Post {
         return nickname;
     }
 
-    public String getDeadline() {
+    public Timestamp getDeadline() {
         return deadline;
     }
 

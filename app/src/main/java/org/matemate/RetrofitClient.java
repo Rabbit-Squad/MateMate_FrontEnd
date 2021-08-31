@@ -16,6 +16,7 @@ public class RetrofitClient {
 
     public static Retrofit getClient() {
         Gson gson = new GsonBuilder()
+                .setDateFormat("HH:mm:ss")
                 .setLenient()
                 .create();
 
