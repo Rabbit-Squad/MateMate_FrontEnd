@@ -9,7 +9,7 @@ public class NewPostData {
     private int userId;
 
     @SerializedName("deadline")
-    private Time deadline;
+    private String deadline;
 
     @SerializedName("location")
     private String location;
@@ -23,7 +23,7 @@ public class NewPostData {
     @SerializedName("content")
     private String content;
 
-    public NewPostData(int userId, Time deadline, String location, int min_num, String title, String content) {
+    public NewPostData(int userId, String deadline, String location, int min_num, String title, String content) {
         this.userId = userId;
         this.deadline = deadline;
         this.location = location;

@@ -69,11 +69,13 @@ public class EditFragment extends Fragment {
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
                 int idx = sharedPreferences.getInt("userIdx", -1);
-                int _hour = Integer.parseInt(hour.getSelectedItem().toString());
-                int _minute = Integer.parseInt(minute.getSelectedItem().toString());
+
+                String _hour = hour.getSelectedItem().toString();
+                String _minute = minute.getSelectedItem().toString();
+
                 int _min_num = Integer.parseInt(min_num_spinner.getSelectedItem().toString());
 
-                Time time = new Time(_hour, _minute, 0);
+                String time = _hour + ":" + _minute + ":00";
 
                 NewPostData data = new NewPostData(idx, time, location_input.getText().toString(), _min_num, title_input.getText().toString(), text_input.getText().toString());
                 startPosting(data);
