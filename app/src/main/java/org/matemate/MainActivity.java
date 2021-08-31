@@ -66,7 +66,9 @@ public class MainActivity extends AppCompatActivity {
                     for(int i=0; i<Lists.size(); i++) {
                         Posts.add(new Post(Lists.get(i).getNickname(), Lists.get(i).getDeadline().toString(), Lists.get(i).getLocation(), Lists.get(i).getMin_num(), Lists.get(i).getCur_num(), Lists.get(i).getTitle(), Lists.get(i).getContent(), Lists.get(i).getClosed()));
                     }
-                    adapter = new PostAdapter(Posts); //adapter설정 + itemCount도 7인것 확인.
+                    adapter = new PostAdapter(getApplicationContext(), Posts); //adapter설정 + itemCount도 7인것 확인.
+                    recyclerView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
@@ -79,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
-        recyclerView.setAdapter(adapter); //setadapter도 완료..
+         //setadapter도 완료..
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

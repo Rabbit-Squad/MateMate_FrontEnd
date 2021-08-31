@@ -1,5 +1,6 @@
 package org.matemate;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import java.util.List;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         List<Post> posts;
+        Context context;
 
         TextView writer_name;
         TextView title;
@@ -22,7 +24,8 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
         TextView time;
         TextView member;
 
-        public PostAdapter(List<Post>posts) {
+        public PostAdapter(Context context, List<Post>posts) {
+                this.context = context;
                 this.posts = posts;
         }
 
