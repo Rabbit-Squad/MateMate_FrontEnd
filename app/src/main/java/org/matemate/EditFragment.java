@@ -21,21 +21,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
-import java.sql.Time;
-import java.util.Calendar;
-import java.util.EventListener;
-import java.util.Objects;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-import static android.content.Context.MODE_PRIVATE;
-
-public class EditFragment extends Fragment {
+public class EditFragment extends Fragment implements OnBackPressedListener {
 
     EditText title_input;
     EditText location_input;
@@ -102,5 +88,12 @@ public class EditFragment extends Fragment {
                 t.printStackTrace();
             }
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+        fragmentManager.beginTransaction().remove(EditFragment.this).commit();
+        fragmentManager.popBackStack();
     }
 }
