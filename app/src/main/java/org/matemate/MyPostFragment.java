@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import retrofit2.Call;
@@ -96,6 +97,7 @@ public class MyPostFragment extends Fragment implements OnBackPressedListener{
                     for (int i = 0; i < Lists.size(); i++) {
                         Posts.add(new Post(Lists.get(i).getNickname(), Lists.get(i).getDeadline().toString(), Lists.get(i).getLocation(), Lists.get(i).getMin_num(), Lists.get(i).getCur_num(), Lists.get(i).getTitle(), Lists.get(i).getContent(), Lists.get(i).getClosed()));
                     }
+                    Collections.reverse(Posts);
                     adapter = new PostAdapter(getContext(), Posts); //adapter설정 + itemCount도 7인것 확인.
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
