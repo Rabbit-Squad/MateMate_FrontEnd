@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
@@ -33,6 +34,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -46,8 +48,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ServiceApi serviceApi;
     Gson gson = new GsonBuilder().setDateFormat("HH:mm:ss").create();
-    List<ListData> Lists = new ArrayList();
-    List<Post> Posts = new ArrayList();
+    List<ListData> Lists;
+    List<Post> Posts;
     PostAdapter adapter;
     RecyclerView recyclerView;
 
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity {
         final ImageView menu = findViewById(R.id.menu_button);
         final DrawerLayout drawer = findViewById(R.id.main_layout);
         NavigationView detailMenu = findViewById(R.id.detail_menu);
+        Lists = new ArrayList();
+        Posts = new ArrayList();
 
         serviceApi.getList().enqueue(new Callback<ListResponse>() {
             @Override
@@ -70,11 +74,11 @@ public class MainActivity extends AppCompatActivity {
                 ListResponse listResponse = response.body();
                 try {
                     Lists = listResponse.getData();
-                    //adapter = new PostAdapter(Lists);
 
                     for(int i=0; i<Lists.size(); i++) {
                         Posts.add(new Post(Lists.get(i).getNickname(), Lists.get(i).getDeadline().toString(), Lists.get(i).getLocation(), Lists.get(i).getMin_num(), Lists.get(i).getCur_num(), Lists.get(i).getTitle(), Lists.get(i).getContent(), Lists.get(i).getClosed()));
                     }
+                    Collections.reverse(Posts);
                     adapter = new PostAdapter(getApplicationContext(), Posts); //adapter설정 + itemCount도 7인것 확인.
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
@@ -90,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
+
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
