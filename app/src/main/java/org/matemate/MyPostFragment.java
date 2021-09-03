@@ -4,19 +4,25 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.navigation.NavigationView;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,16 +32,23 @@ public class MyPostFragment extends Fragment implements OnBackPressedListener{
 
     ServiceApi serviceApi= RetrofitClient.getClient().create(ServiceApi.class);
     RecyclerView recyclerView;
+    DrawerLayout drawer;
+    NavigationView detailMenu;
+    ImageView menu;
     PostAdapter adapter;
     int userIdx;
-    List<ListData> Lists = new ArrayList();
-    List<Post> Posts = new ArrayList();
+    List<ListData> Lists;
+    List<Post> Posts;
+    FragmentManager fragmentManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_myposts, container, false);
-
+        fragmentManager = getActivity().getSupportFragmentManager();
         recyclerView = rootView.findViewById(R.id.my_post_list);
+        detailMenu = rootView.findViewById(R.id.detail_menu);
+        drawer = rootView.findViewById(R.id.my_posts_layout);
+        menu = rootView.findViewById(R.id.menu_button);
         LinearLayoutManager manager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -45,6 +58,30 @@ public class MyPostFragment extends Fragment implements OnBackPressedListener{
     }
 
     private void initUI(ViewGroup rootView) {
+        Lists = new ArrayList();
+        Posts = new ArrayList();
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(Gravity.LEFT);
+            }
+        });
+        detailMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.my_posts) {
+
+                }
+                if(menuItem.getItemId() == R.id.notifications) {
+
+                }
+                if(menuItem.getItemId() == R.id.setting) {
+
+                }
+                drawer.closeDrawers();
+                return false;
+            }
+        });
         getUserList();
     }
 
@@ -82,11 +119,10 @@ public class MyPostFragment extends Fragment implements OnBackPressedListener{
 
     @Override
     public void onBackPressed() {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().remove(MyPostFragment.this).commit();
         fragmentManager.popBackStack();
-        //getFragmentManager().beginTransaction().remove(MyPostFragment.this).commit();
-        //getFragmentManager().popBackStack();
     }
+
+
 }
 
