@@ -1,6 +1,7 @@
 package org.matemate;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -30,12 +31,13 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
     Spinner minute;
     Spinner min_num_spinner;
     Button postBtn;
-
+    FragmentManager fragmentManager;
     ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_edit, container, false);
+        fragmentManager = getActivity().getSupportFragmentManager();
         initUI(rootView);
 
         return rootView;
@@ -64,7 +66,16 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
                 String time = _hour + ":" + _minute + ":00";
 
                 NewPostData data = new NewPostData(idx, time, location_input.getText().toString(), _min_num, title_input.getText().toString(), text_input.getText().toString());
+
+                Intent intent = new Intent(getContext(), MainActivity.class);
+                intent.putExtra("userIdx", idx);
+                intent.putExtra("time", time);
+                intent.putExtra("location", location_input.getText().toString());
+                intent.putExtra("min_num", _min_num);
+                intent.putExtra("title", title_input.getText().toString());
+                intent.putExtra("text", text_input.getText().toString());
                 startPosting(data);
+                getContext().startActivity(intent);
             }
         });
     }
@@ -78,6 +89,8 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
 
                 if (result.getStatus() == 200) {
                     System.out.println("게시물 작성 성공!!");
+                    fragmentManager.beginTransaction().remove(EditFragment.this).commit();
+                    fragmentManager.popBackStack();
                 }
             }
 
