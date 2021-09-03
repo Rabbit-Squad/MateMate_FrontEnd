@@ -1,23 +1,30 @@
 package org.matemate;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -35,6 +42,7 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     EditFragment editFragment = new EditFragment();
+    MyPostFragment myPostFragment = new MyPostFragment();
 
     private ServiceApi serviceApi;
     Gson gson = new GsonBuilder().setDateFormat("HH:mm:ss").create();
@@ -51,8 +59,9 @@ public class MainActivity extends AppCompatActivity {
         serviceApi = RetrofitClient.getClient().create(ServiceApi.class);
         LinearLayoutManager manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager); // 레이아웃 매니저 설정
-        ImageView menu = findViewById(R.id.menu_button);
+        final ImageView menu = findViewById(R.id.menu_button);
         final DrawerLayout drawer = findViewById(R.id.main_layout);
+        NavigationView detailMenu = findViewById(R.id.detail_menu);
 
         serviceApi.getList().enqueue(new Callback<ListResponse>() {
             @Override
@@ -81,7 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 t.printStackTrace();
             }
         });
-         //setadapter도 완료..
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,12 +97,30 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        detailMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.my_posts) {
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, myPostFragment).commit();
+                }
+                if(menuItem.getItemId() == R.id.notifications) {
+
+                }
+                if(menuItem.getItemId() == R.id.setting) {
+
+                }
+                drawer.closeDrawers();
+                return false;
+            }
+
+        });
+
         final FloatingActionButton addPost = findViewById(R.id.add_post);
         addPost.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, editFragment).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, editFragment).commit(); //header 제외한 부분에 프래그먼트 띄움
             }
         });
 
@@ -102,7 +128,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        getSupportFragmentManager().beginTransaction().remove(editFragment).commit();
-        getSupportFragmentManager().popBackStack();
+        List<Fragment> fragmentList = getSupportFragmentManager().getFragments();
+        for(Fragment fragment : fragmentList) {
+            if(fragment instanceof OnBackPressedListener) {
+                ((OnBackPressedListener)fragment).onBackPressed();
+            }
+        }
     }
 }

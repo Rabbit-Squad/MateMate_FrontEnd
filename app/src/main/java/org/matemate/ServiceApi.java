@@ -7,6 +7,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface ServiceApi {
     @Headers({"Content-Type:application/json"})
@@ -21,4 +22,7 @@ public interface ServiceApi {
 
     @GET("/list")
     Call<ListResponse> getList();
+
+    @GET("/list/{userIdx}")
+    Call<ListResponse> getUserList(@Path("userIdx") int userIdx);
 }
