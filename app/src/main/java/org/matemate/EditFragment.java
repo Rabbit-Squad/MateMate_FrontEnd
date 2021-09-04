@@ -32,6 +32,7 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
     Spinner min_num_spinner;
     Button postBtn;
     FragmentManager fragmentManager;
+    LocationFragment locationFragment = new LocationFragment();
     ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
 
     @Override
@@ -51,6 +52,14 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
         hour = rootView.findViewById(R.id.edit_time);
         minute = rootView.findViewById(R.id.edit_minute);
         min_num_spinner = rootView.findViewById(R.id.edit_min_num);
+
+        location_input.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                fragmentManager.beginTransaction().add(R.id.container, locationFragment).commit();
+
+            }
+        });
 
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +114,6 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
 
     @Override
     public void onBackPressed() {
-        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
         fragmentManager.beginTransaction().remove(EditFragment.this).commit();
         fragmentManager.popBackStack();
     }
