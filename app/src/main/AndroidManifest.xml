@@ -25,6 +25,10 @@
             android:name="server_url"
             android:value="app.BuildConfig.server_url">
         </meta-data>
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="app.BuildConfig.api_key">
+        </meta-data>
     </application>
 
 </manifest>

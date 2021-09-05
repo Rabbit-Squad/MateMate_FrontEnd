@@ -32,8 +32,21 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
     Spinner min_num_spinner;
     Button postBtn;
     FragmentManager fragmentManager;
-    LocationFragment locationFragment = new LocationFragment();
+    // locationFragment = new LocationFragment();
+    MainActivity activity;
     ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = (MainActivity)getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        activity = null;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,8 +69,7 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
         location_input.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                fragmentManager.beginTransaction().add(R.id.container, locationFragment).commit();
-
+                activity.fragmentChange(1);
             }
         });
 

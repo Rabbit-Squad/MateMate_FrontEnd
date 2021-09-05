@@ -14,6 +14,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "server_url", properties.getProperty("SERVER_URL"))
+        buildConfigField("String", "api_key", properties.getProperty("api.key"))
     }
     buildTypes {
         release {
