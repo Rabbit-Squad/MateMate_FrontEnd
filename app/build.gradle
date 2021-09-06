@@ -7,7 +7,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "org.matemate"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 29
         vectorDrawables.useSupportLibrary = true
         versionCode 1
@@ -15,6 +15,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "server_url", properties.getProperty("SERVER_URL"))
         buildConfigField("String", "api_key", properties.getProperty("api.key"))
+        buildConfigField("String", "app_key", properties.getProperty("APP_KEY"))
     }
     buildTypes {
         release {
@@ -38,4 +39,6 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.google.android.libraries.places:places:2.4.0'
+    implementation 'noman.placesapi:placesAPI:1.1.3'
 }

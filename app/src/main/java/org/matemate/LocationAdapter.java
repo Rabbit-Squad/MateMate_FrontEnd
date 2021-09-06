@@ -1,25 +1,62 @@
 package org.matemate;
 
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class LocationAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder>{
+import java.util.List;
+
+public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHolder>{
+
+    TextView detail;
+    TextView placeName;
+    List<Location> locations;
+    Context context;
+
+    public LocationAdapter(Context context, List<Location> locations) {
+        this.context = context;
+        this.locations = locations;
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder{
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            placeName = itemView.findViewById(R.id.location_name);
+            detail = itemView.findViewById(R.id.location_detail);
+        }
+
+        public void setItem(Location item) {
+            locations.add(item);
+            placeName.setText(item.getPlaceName());
+            detail.setText(item.getDetail());
+        }
+
+        public Location getLocation(int position) {
+            return locations.get(position);
+        }
+    }
 
     @NonNull
     @Override
-    public PostAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+    public LocationAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View location = inflater.inflate(R.layout.location_item, parent, false);
+        return new ViewHolder(location);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostAdapter.ViewHolder holder, int position) {
-
+    public void onBindViewHolder(@NonNull LocationAdapter.ViewHolder holder, int position) {
+            Location location = locations.get(position);
+            holder.setItem(location);
     }
 
     @Override
-    public int getItemCount() {
-        return 0;
-    }
+    public int getItemViewType(int position) {return position;}
+    public int getItemCount() { return locations.size(); }
 }
