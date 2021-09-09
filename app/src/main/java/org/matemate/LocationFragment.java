@@ -33,6 +33,9 @@ import java.util.List;
 import noman.googleplaces.Place;
 import noman.googleplaces.PlacesException;
 import noman.googleplaces.PlacesListener;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 public class LocationFragment extends Fragment implements OnBackPressedListener, PlacesListener {
@@ -41,8 +44,9 @@ public class LocationFragment extends Fragment implements OnBackPressedListener,
     List<Location> locations;
     RecyclerView recyclerView;
     LocationAdapter adapter;
+    KakaoAPI kakaoAPI;
 
-    private final static String API_KEY = BuildConfig.api_key;
+    private final static String APP_KEY = BuildConfig.app_key;
     FragmentManager fragmentManager;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.location_search, container, false);
@@ -52,6 +56,7 @@ public class LocationFragment extends Fragment implements OnBackPressedListener,
         locationInput = rootView.findViewById(R.id.location_input);
         fragmentManager = getActivity().getSupportFragmentManager();
         geocoder = new Geocoder(this.getContext());
+        kakaoAPI = KakaoRetrofit.searchLocation().create(KakaoAPI.class);
         locationInput.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -79,6 +84,7 @@ public class LocationFragment extends Fragment implements OnBackPressedListener,
     private void searchLocation() {
         List<Address> list = new ArrayList<>();
         String address = locationInput.getText().toString();
+        /*
         try{
             list = geocoder.getFromLocationName(address, 5);
         } catch(Exception e){
@@ -88,11 +94,24 @@ public class LocationFragment extends Fragment implements OnBackPressedListener,
             locations = new ArrayList<>();
             for(int i = 0; i<list.size();i++) {
                 locations.add(new Location("임시", list.get(i).getAddressLine(0)));
+
             }
             adapter = new LocationAdapter(getContext(), locations);
             recyclerView.setAdapter(adapter);
             adapter.notifyDataSetChanged();
-        }
+        }*/
+        kakaoAPI.searchLocation(APP_KEY, address).enqueue(new Callback<LocationResponse>() {
+            @Override
+            public void onResponse(Call<LocationResponse> call, Response<LocationResponse> response) {
+                System.out.println(response.toString());
+            }
+
+            @Override
+            public void onFailure(Call<LocationResponse> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+
     }
 
     @Override
