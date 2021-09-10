@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                     Lists = listResponse.getData();
 
                     for(int i=0; i<Lists.size(); i++) {
-                        Posts.add(new Post(Lists.get(i).getNickname(), Lists.get(i).getDeadline().toString(), Lists.get(i).getLocation(), Lists.get(i).getMin_num(), Lists.get(i).getCur_num(), Lists.get(i).getTitle(), Lists.get(i).getContent(), Lists.get(i).getClosed()));
+                        Posts.add(new Post(Lists.get(i).getId(), Lists.get(i).getNickname(), Lists.get(i).getDeadline().toString(), Lists.get(i).getLocation(), Lists.get(i).getMin_num(), Lists.get(i).getCur_num(), Lists.get(i).getTitle(), Lists.get(i).getContent(), Lists.get(i).getClosed()));
                     }
                     Collections.reverse(Posts);
                     adapter = new PostAdapter(getApplicationContext(), Posts); //adapter설정 + itemCount도 7인것 확인.
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
                             item.putInt("cur_num", post.getCur_num());
                             item.putInt("min_num", post.getMin_num());
                             item.putString("contents", post.getContent());
-
+                            item.putInt("id", post.getId());
                             fragment.setArguments(item);
                         }
                     });

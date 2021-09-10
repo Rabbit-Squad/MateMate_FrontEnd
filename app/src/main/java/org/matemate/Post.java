@@ -37,11 +37,13 @@ public class Post {
     String deadline;
     String location;
     String content;
+    int id;
     int min_num;
     int cur_num;
     int closed;
 
-    public Post(String nickname, String deadline, String location, int min_num, int cur_num, String title, String content, int closed) {
+    public Post(int id, String nickname, String deadline, String location, int min_num, int cur_num, String title, String content, int closed) {
+        this.id = id;
         this.nickname = nickname;
         this.deadline = deadline;
         this.location = location;
@@ -83,4 +85,6 @@ public class Post {
     public int getClosed() {
         return closed;
     }
+
+    public int getId() {return id;}
 }

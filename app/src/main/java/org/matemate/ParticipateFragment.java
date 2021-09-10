@@ -1,5 +1,7 @@
 package org.matemate;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -38,6 +40,7 @@ public class ParticipateFragment extends Fragment implements OnBackPressedListen
 
     ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
     FragmentManager fragmentManager;
+    int postidx;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -69,13 +72,17 @@ public class ParticipateFragment extends Fragment implements OnBackPressedListen
         participate_btn = rootView.findViewById(R.id.participate_submit_btn);
         cancel_btn = rootView.findViewById(R.id.participate_cancel_btn);
 
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+        final int userIdx = sharedPreferences.getInt("userIdx", -1);
+
+
         //button 설정
         participate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequestData data = new RequestData();
+                RequestData data = new RequestData(userIdx, participate_message.getText().toString(), time.getText().toString());
 
-                startParticipate();
+                startParticipate(postidx, data);
             }
         });
 
@@ -96,6 +103,7 @@ public class ParticipateFragment extends Fragment implements OnBackPressedListen
             location.setText(bundle.getString("location"));
             text.setText(bundle.getString("contents"));
             people.setText(bundle.getInt("cur_num") + "/" + bundle.getInt("min_num"));
+            postidx = bundle.getInt("id");
         }
     }
 
