@@ -9,6 +9,9 @@ public class ListData {
     @SerializedName("nickname")
     private String nickname;
 
+    @SerializedName("id")
+    private int id;
+
     @SerializedName("deadline")
     private Timestamp deadline;
 
@@ -30,8 +33,9 @@ public class ListData {
     @SerializedName("closed")
     private int closed;
 
-    public ListData(String nickname, Timestamp deadline, String location, int min_num, int cur_num, String title, String content, int closed) {
+    public ListData(String nickname, int id, Timestamp deadline, String location, int min_num, int cur_num, String title, String content, int closed) {
         this.nickname = nickname;
+        this.id = id;
         this.deadline = deadline;
         this.location = location;
         this.min_num = min_num;
@@ -71,5 +75,9 @@ public class ListData {
 
     public int getClosed() {
         return closed;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -82,6 +83,30 @@ public class MainActivity extends AppCompatActivity {
                     Collections.reverse(Posts);
                     adapter = new PostAdapter(getApplicationContext(), Posts); //adapter설정 + itemCount도 7인것 확인.
                     recyclerView.setAdapter(adapter);
+
+                    adapter.setOnItemClickListener(new OnPostItemClickListener() {
+                        @Override
+                        public void onItemClick(PostAdapter.ViewHolder holder, View view, int position) {
+                            Post post = adapter.getPost(position);
+                            //Toast.makeText(getApplicationContext(), "게시물 선택:" + post.getTitle(), Toast.LENGTH_SHORT).show();
+
+                            ParticipateFragment fragment = new ParticipateFragment();
+
+                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment).commit();
+
+                            //Fragment에 보낼 번들
+                            Bundle item = new Bundle();
+                            item.putString("nickname", post.getNickname());
+                            item.putString("title", post.getTitle());
+                            item.putString("location", post.getLocation());
+                            item.putInt("cur_num", post.getCur_num());
+                            item.putInt("min_num", post.getMin_num());
+                            item.putString("contents", post.getContent());
+
+                            fragment.setArguments(item);
+                        }
+                    });
+
                     adapter.notifyDataSetChanged();
                 } catch(Exception e) {
                     e.printStackTrace();
@@ -147,4 +172,5 @@ public class MainActivity extends AppCompatActivity {
             getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, locationFragment).commit();
         }
     }
+
 }

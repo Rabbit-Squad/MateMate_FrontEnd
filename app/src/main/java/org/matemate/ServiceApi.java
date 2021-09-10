@@ -25,4 +25,7 @@ public interface ServiceApi {
 
     @GET("/list/{userIdx}")
     Call<ListResponse> getUserList(@Path("userIdx") int userIdx);
+
+    @POST("/request/{postIdx}")
+    Call<JoinResponse> sendRequest(@Path("postIdx") int postIdx, @Body RequestData data);
 }
