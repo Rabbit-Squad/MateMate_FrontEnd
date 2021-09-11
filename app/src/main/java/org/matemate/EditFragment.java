@@ -20,12 +20,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class EditFragment extends Fragment implements OnBackPressedListener {
 
     EditText title_input;
-    EditText location_input;
+    TextView location_input;
     EditText text_input;
     Spinner hour;
     Spinner minute;
