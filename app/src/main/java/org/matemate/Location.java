@@ -1,5 +1,5 @@
 package org.matemate;
-
+// location용 recyclerview에 넣을 데이터
 public class Location {
     String placeName;
     String detail;

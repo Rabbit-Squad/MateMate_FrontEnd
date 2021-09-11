@@ -41,7 +41,8 @@ import retrofit2.Response;
 public class LocationFragment extends Fragment implements OnBackPressedListener, PlacesListener {
     EditText locationInput;
     Geocoder geocoder;
-    List<Location> locations;
+    List<Location> locations; // adapter에 넣을 배열.
+    List<org.matemate.Place> placeList; //kakaoAPI로 받아온 placeList저장
     RecyclerView recyclerView;
     LocationAdapter adapter;
     KakaoAPI kakaoAPI;
@@ -82,8 +83,9 @@ public class LocationFragment extends Fragment implements OnBackPressedListener,
     }
 
     private void searchLocation() {
-        List<Address> list = new ArrayList<>();
+        //final List<Place> list = new ArrayList<>();
         String address = locationInput.getText().toString();
+
         /*
         try{
             list = geocoder.getFromLocationName(address, 5);
@@ -103,7 +105,23 @@ public class LocationFragment extends Fragment implements OnBackPressedListener,
         kakaoAPI.searchLocation(APP_KEY, address).enqueue(new Callback<LocationResponse>() {
             @Override
             public void onResponse(Call<LocationResponse> call, Response<LocationResponse> response) {
-                System.out.println(response.toString());
+                LocationResponse locationResponse = response.body();
+                try {
+                    placeList = locationResponse.getDocuments();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                System.out.println(placeList.size());
+                if(placeList.size() > 0) {
+                    locations = new ArrayList<>(); //adapter에 넣을 lists에 서버로부터 받아온 placeList 중 필요한 데이터만 간추려 넣음
+                    for(int i = 0; i<placeList.size();i++) {
+                        locations.add(new Location(placeList.get(i).place_name, placeList.get(i).getRoad_address_name()));
+                    }
+                }
+                adapter = new LocationAdapter(getContext(), locations);
+                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
+
             }
 
             @Override

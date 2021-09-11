@@ -31,8 +31,7 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
             detail = itemView.findViewById(R.id.location_detail);
         }
 
-        public void setItem(Location item) {
-            locations.add(item);
+        public void setLocation(Location item) {
             placeName.setText(item.getPlaceName());
             detail.setText(item.getDetail());
         }
@@ -53,10 +52,11 @@ public class LocationAdapter extends RecyclerView.Adapter<LocationAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull LocationAdapter.ViewHolder holder, int position) {
             Location location = locations.get(position);
-            holder.setItem(location);
+            holder.setLocation(location);
     }
 
     @Override
     public int getItemViewType(int position) {return position;}
     public int getItemCount() { return locations.size(); }
+    public Location getLocation(int position) {return locations.get(position);}
 }
