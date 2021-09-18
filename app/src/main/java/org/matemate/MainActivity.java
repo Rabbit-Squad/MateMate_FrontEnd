@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     EditFragment editFragment = new EditFragment();
     MyPostFragment myPostFragment = new MyPostFragment();
     LocationFragment locationFragment = new LocationFragment();
+    SettingFragment settingFragment = new SettingFragment();
 
     private ServiceApi serviceApi;
     Gson gson = new GsonBuilder().setDateFormat("HH:mm:ss").create();
@@ -138,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
 
                 }
                 if(menuItem.getItemId() == R.id.setting) {
-
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, settingFragment).commit();
                 }
                 drawer.closeDrawers();
                 return false;
