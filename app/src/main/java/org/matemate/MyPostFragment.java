@@ -36,7 +36,7 @@ public class MyPostFragment extends Fragment implements OnBackPressedListener{
     DrawerLayout drawer;
     NavigationView detailMenu;
     ImageView menu;
-    PostAdapter adapter;
+    MyPostAdapter adapter;
     int userIdx;
     List<ListData> Lists;
     List<Post> Posts;
@@ -98,10 +98,9 @@ public class MyPostFragment extends Fragment implements OnBackPressedListener{
                         Posts.add(new Post(Lists.get(i).getId(), Lists.get(i).getNickname(), Lists.get(i).getDeadline().toString(), Lists.get(i).getLocation(), Lists.get(i).getMin_num(), Lists.get(i).getCur_num(), Lists.get(i).getTitle(), Lists.get(i).getContent(), Lists.get(i).getClosed()));
                     }
                     Collections.reverse(Posts);
-                    adapter = new PostAdapter(getContext(), Posts); //adapter설정 + itemCount도 7인것 확인.
+                    adapter = new MyPostAdapter(getContext(), Posts); //adapter설정 + itemCount도 7인것 확인.
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
-                    System.out.println(adapter.getItemCount());
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -103,6 +103,9 @@ public class MainActivity extends AppCompatActivity {
                             item.putInt("id", post.getId());
                             fragment.setArguments(item);
                         }
+
+                        @Override
+                        public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) { }
                     });
 
                     adapter.notifyDataSetChanged();
