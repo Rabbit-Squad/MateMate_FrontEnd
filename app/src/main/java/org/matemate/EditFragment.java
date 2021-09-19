@@ -5,9 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.fragment.app.FragmentManager;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,7 +23,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class EditFragment extends Fragment implements OnBackPressedListener {
+public class EditFragment extends AppCompatActivity implements OnBackPressedListener {
 
     EditText title_input;
     TextView location_input;
@@ -33,51 +33,44 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
     Spinner min_num_spinner;
     Button postBtn;
     FragmentManager fragmentManager;
-    // locationFragment = new LocationFragment();
-    MainActivity activity;
+    LocationFragment locationFragment = new LocationFragment();
     ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        activity = (MainActivity)getActivity();
-    }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-        activity = null;
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_edit, container, false);
-        fragmentManager = getActivity().getSupportFragmentManager();
-        initUI(rootView);
-
-        return rootView;
-    }
-
-    private void initUI(ViewGroup rootView) {
-        title_input = rootView.findViewById(R.id.edit_title);
-        location_input = rootView.findViewById(R.id.edit_location);
-        text_input = rootView.findViewById(R.id.edit_text);
-        postBtn = rootView.findViewById(R.id.edit_submit_btn);
-        hour = rootView.findViewById(R.id.edit_time);
-        minute = rootView.findViewById(R.id.edit_minute);
-        min_num_spinner = rootView.findViewById(R.id.edit_min_num);
-
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_edit);
+        fragmentManager = getSupportFragmentManager();
+        title_input = findViewById(R.id.edit_title);
+        location_input = findViewById(R.id.edit_location);
+        text_input = findViewById(R.id.edit_text);
+        postBtn = findViewById(R.id.edit_submit_btn);
+        hour = findViewById(R.id.edit_time);
+        minute = findViewById(R.id.edit_minute);
+        min_num_spinner = findViewById(R.id.edit_min_num);
         location_input.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                activity.fragmentChange(1);
+                fragmentManager.beginTransaction().replace(R.id.container, locationFragment).commit();
             }
+
         });
+
+        Intent intent = getIntent();
+        try {
+            String locations = intent.getExtras().getString("detail") + " " +intent.getExtras().getString("placeName");
+            location_input.setText(locations);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+               SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+
                 int idx = sharedPreferences.getInt("userIdx", -1);
 
                 String _hour = hour.getSelectedItem().toString();
@@ -89,7 +82,7 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
 
                 NewPostData data = new NewPostData(idx, time, location_input.getText().toString(), _min_num, title_input.getText().toString(), text_input.getText().toString());
 
-                Intent intent = new Intent(getContext(), MainActivity.class);
+                Intent intent = new Intent(EditFragment.this, MainActivity.class);
                 intent.putExtra("userIdx", idx);
                 intent.putExtra("time", time);
                 intent.putExtra("location", location_input.getText().toString());
@@ -97,7 +90,7 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
                 intent.putExtra("title", title_input.getText().toString());
                 intent.putExtra("text", text_input.getText().toString());
                 startPosting(data);
-                getContext().startActivity(intent);
+                startActivity(intent);
             }
         });
     }
@@ -107,18 +100,17 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
             @Override
             public void onResponse(Call<PostResponse> call, Response<PostResponse> response) {
                 PostResponse result = response.body();
-                Toast.makeText(getContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
-
+                Toast.makeText(getApplicationContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
                 if (result.getStatus() == 200) {
                     System.out.println("게시물 작성 성공!!");
-                    fragmentManager.beginTransaction().remove(EditFragment.this).commit();
-                    fragmentManager.popBackStack();
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(intent);
                 }
             }
 
             @Override
             public void onFailure(Call<PostResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "게시물 작성 오류", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "게시물 작성 오류", Toast.LENGTH_SHORT).show();
                 Log.e("게시물 작성 오류 발생", t.getMessage());
                 t.printStackTrace();
             }
@@ -127,7 +119,8 @@ public class EditFragment extends Fragment implements OnBackPressedListener {
 
     @Override
     public void onBackPressed() {
-        fragmentManager.beginTransaction().remove(EditFragment.this).commit();
-        fragmentManager.popBackStack();
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
+
 }

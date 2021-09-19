@@ -21,6 +21,7 @@
         <activity android:name=".MainActivity">
         </activity>
         <activity android:name=".SignUpActivity"/>
+        <activity android:name=".EditFragment"/>
         <meta-data
             android:name="server_url"
             android:value="app.BuildConfig.server_url">

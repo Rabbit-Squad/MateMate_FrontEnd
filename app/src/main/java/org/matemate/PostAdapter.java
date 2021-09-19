@@ -93,6 +93,11 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> im
         }
 
         @Override
+        public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) {
+
+        }
+
+        @Override
         public int getItemViewType(int position) {return position;}
         public int getItemCount() {
                 return posts.size();

@@ -1,54 +1,35 @@
 package org.matemate;
-
-import android.location.Address;
-import android.location.Geocoder;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.google.android.gms.common.api.Status;
-import com.google.android.libraries.places.api.Places;
-import com.google.android.libraries.places.api.net.PlacesClient;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-
-import net.daum.mf.map.api.MapReverseGeoCoder;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
-import noman.googleplaces.Place;
-import noman.googleplaces.PlacesException;
-import noman.googleplaces.PlacesListener;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 
-public class LocationFragment extends Fragment implements OnBackPressedListener, PlacesListener {
+public class LocationFragment extends Fragment implements OnBackPressedListener {
     EditText locationInput;
-    Geocoder geocoder;
+    EditFragment editFragment;
     List<Location> locations; // adapter에 넣을 배열.
     List<org.matemate.Place> placeList; //kakaoAPI로 받아온 placeList저장
     RecyclerView recyclerView;
     LocationAdapter adapter;
     KakaoAPI kakaoAPI;
-
-    private final static String APP_KEY = BuildConfig.app_key;
     FragmentManager fragmentManager;
+    private final static String APP_KEY = BuildConfig.app_key;
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.location_search, container, false);
         recyclerView = rootView.findViewById(R.id.location_view);
@@ -56,13 +37,11 @@ public class LocationFragment extends Fragment implements OnBackPressedListener,
         recyclerView.setLayoutManager(manager); // 레이아웃 매니저 설정
         locationInput = rootView.findViewById(R.id.location_input);
         fragmentManager = getActivity().getSupportFragmentManager();
-        geocoder = new Geocoder(this.getContext());
         kakaoAPI = KakaoRetrofit.searchLocation().create(KakaoAPI.class);
+
         locationInput.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -70,38 +49,18 @@ public class LocationFragment extends Fragment implements OnBackPressedListener,
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
-
-            }
+            public void afterTextChanged(Editable s) { }
         });
-
         initUI(rootView);
         return rootView;
     }
 
-    private void initUI(ViewGroup rootView) {
-    }
+    private void initUI(ViewGroup rootView) { }
+
 
     private void searchLocation() {
-        //final List<Place> list = new ArrayList<>();
         String address = locationInput.getText().toString();
 
-        /*
-        try{
-            list = geocoder.getFromLocationName(address, 5);
-        } catch(Exception e){
-            e.printStackTrace();
-        }
-        if(list.size() > 0) {
-            locations = new ArrayList<>();
-            for(int i = 0; i<list.size();i++) {
-                locations.add(new Location("임시", list.get(i).getAddressLine(0)));
-
-            }
-            adapter = new LocationAdapter(getContext(), locations);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }*/
         kakaoAPI.searchLocation(APP_KEY, address).enqueue(new Callback<LocationResponse>() {
             @Override
             public void onResponse(Call<LocationResponse> call, Response<LocationResponse> response) {
@@ -120,8 +79,22 @@ public class LocationFragment extends Fragment implements OnBackPressedListener,
                 }
                 adapter = new LocationAdapter(getContext(), locations);
                 recyclerView.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
+                adapter.setOnItemClickListener(new OnLocationClickListener() {
+                    @Override
+                    public void onItemClick(LocationAdapter.ViewHolder holder, View view, int position) {
+                        editFragment = new EditFragment();
+                        Location location = adapter.getLocation(position);
+                        String detail = location.getDetail();
+                        String placeName = location.getPlaceName();
 
+                        Intent intent = new Intent(getContext(), EditFragment.class);
+                        intent.putExtra("detail", detail);
+                        intent.putExtra("placeName", placeName);
+                        startActivity(intent);
+
+                    }
+                });
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -138,23 +111,4 @@ public class LocationFragment extends Fragment implements OnBackPressedListener,
         fragmentManager.popBackStack();
     }
 
-    @Override
-    public void onPlacesFailure(PlacesException e) {
-
-    }
-
-    @Override
-    public void onPlacesStart() {
-
-    }
-
-    @Override
-    public void onPlacesSuccess(List<Place> places) {
-
-    }
-
-    @Override
-    public void onPlacesFinished() {
-
-    }
 }

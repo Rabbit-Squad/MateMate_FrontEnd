@@ -2,6 +2,7 @@ package org.matemate;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
@@ -28,4 +29,10 @@ public interface ServiceApi {
 
     @POST("/request/{postIdx}")
     Call<JoinResponse> sendRequest(@Path("postIdx") int postIdx, @Body RequestData data);
+
+    @GET("/profile/{userIdx}")
+    Call<ProfileResponse> getUserInfo(@Path("userIdx") int userIdx);
+
+    @DELETE("profile/delete/{userIdx}")
+    Call<DeleteResponse> deleteUser(@Path("userIdx") int userIdx);
 }

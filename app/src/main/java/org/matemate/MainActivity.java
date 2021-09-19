@@ -44,10 +44,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
-    EditFragment editFragment = new EditFragment();
     MyPostFragment myPostFragment = new MyPostFragment();
+<<<<<<< HEAD
     LocationFragment locationFragment = new LocationFragment();
     SettingFragment settingFragment = new SettingFragment();
+=======
+>>>>>>> 24174dd79d21a7f87304e37bb8a5a85220d37420
 
     private ServiceApi serviceApi;
     Gson gson = new GsonBuilder().setDateFormat("HH:mm:ss").create();
@@ -106,6 +108,9 @@ public class MainActivity extends AppCompatActivity {
                             item.putInt("id", post.getId());
                             fragment.setArguments(item);
                         }
+
+                        @Override
+                        public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) { }
                     });
 
                     adapter.notifyDataSetChanged();
@@ -152,7 +157,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, editFragment).commit(); //header 제외한 부분에 프래그먼트 띄움
+                Intent intent = new Intent(MainActivity.this, EditFragment.class);
+                startActivity(intent);
             }
         });
 
@@ -167,11 +173,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
-    public void fragmentChange(int index) {
-        if(index == 1) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, locationFragment).commit();
-        }
-    }
-
 }
