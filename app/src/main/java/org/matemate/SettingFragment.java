@@ -131,6 +131,7 @@ public class SettingFragment extends Fragment implements OnBackPressedListener {
 
                 Intent intent = new Intent(getContext(), LoginActivity.class);
                 startActivity(intent);
+                getActivity().finish();
             }
 
             @Override

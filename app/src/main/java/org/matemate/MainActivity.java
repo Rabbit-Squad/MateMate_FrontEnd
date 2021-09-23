@@ -45,11 +45,8 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     MyPostFragment myPostFragment = new MyPostFragment();
-<<<<<<< HEAD
     LocationFragment locationFragment = new LocationFragment();
     SettingFragment settingFragment = new SettingFragment();
-=======
->>>>>>> 24174dd79d21a7f87304e37bb8a5a85220d37420
 
     private ServiceApi serviceApi;
     Gson gson = new GsonBuilder().setDateFormat("HH:mm:ss").create();
