@@ -32,6 +32,7 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
     Spinner minute;
     Spinner min_num_spinner;
     Button postBtn;
+    String locations;
     FragmentManager fragmentManager;
     LocationFragment locationFragment = new LocationFragment();
     ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
@@ -59,7 +60,7 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
 
         Intent intent = getIntent();
         try {
-            String locations = intent.getExtras().getString("detail") + " " +intent.getExtras().getString("placeName");
+            locations = intent.getExtras().getString("detail") + " " +intent.getExtras().getString("placeName");
             location_input.setText(locations);
 
         } catch (Exception e) {
@@ -69,7 +70,7 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
 
                 int idx = sharedPreferences.getInt("userIdx", -1);
 
@@ -82,15 +83,20 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
 
                 NewPostData data = new NewPostData(idx, time, location_input.getText().toString(), _min_num, title_input.getText().toString(), text_input.getText().toString());
 
-                Intent intent = new Intent(EditFragment.this, MainActivity.class);
-                intent.putExtra("userIdx", idx);
-                intent.putExtra("time", time);
-                intent.putExtra("location", location_input.getText().toString());
-                intent.putExtra("min_num", _min_num);
-                intent.putExtra("title", title_input.getText().toString());
-                intent.putExtra("text", text_input.getText().toString());
-                startPosting(data);
-                startActivity(intent);
+//                if (location_input.getText().length() == 0 || locations == null || locations.length() == 0 || title_input.getText().toString() == null || text_input.getText().length() == 0 || text_input.getText().toString() == null) {
+//                    Toast.makeText(getApplicationContext(), "모든 정보를 기재해주세요", Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+                    Intent intent = new Intent(EditFragment.this, MainActivity.class);
+                    intent.putExtra("userIdx", idx);
+                    intent.putExtra("time", time);
+                    intent.putExtra("location", location_input.getText().toString());
+                    intent.putExtra("min_num", _min_num);
+                    intent.putExtra("title", title_input.getText().toString());
+                    intent.putExtra("text", text_input.getText().toString());
+                    startPosting(data);
+                    startActivity(intent);
+//                }
             }
         });
     }
