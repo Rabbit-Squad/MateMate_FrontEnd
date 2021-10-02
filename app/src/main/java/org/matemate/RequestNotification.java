@@ -1,5 +1,6 @@
 package org.matemate;
 
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.media.audiofx.NoiseSuppressor;
@@ -28,6 +29,7 @@ import retrofit2.Response;
 
 public class RequestNotification extends Fragment implements OnBackPressedListener {
     FragmentManager fragmentManager;
+    NotificationDetailFragment fragment = new NotificationDetailFragment();
     ServiceApi serviceApi;
     Button reject;
     List<NotificationData> Data;
@@ -61,6 +63,12 @@ public class RequestNotification extends Fragment implements OnBackPressedListen
                     adapter = new NotificationAdapter(Data);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+                    adapter.setOnItemClickListener(new OnNotificationClickListener(){
+                        @Override
+                        public void onItemClick(NotificationAdapter.ViewHolder holder, View view, int position) {
+                            fragmentManager.beginTransaction().replace(R.id.fragment_content, fragment).commit();
+                        }
+                    });
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
@@ -73,12 +81,7 @@ public class RequestNotification extends Fragment implements OnBackPressedListen
             }
         });
 
-//        reject.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+
     }
 
 

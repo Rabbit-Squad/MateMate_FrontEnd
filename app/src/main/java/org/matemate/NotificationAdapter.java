@@ -13,17 +13,27 @@ import org.w3c.dom.Text;
 
 import java.util.List;
 
-public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder>  {
+public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.ViewHolder> implements OnNotificationClickListener {
     List<NotificationData> list;
     TextView title;
     TextView nickname;
     TextView time;
     TextView contents;
+    OnNotificationClickListener listener;
 
 
     public NotificationAdapter(List<NotificationData> list) {
         this.list = list;
     }
+
+    public void setOnItemClickListener(OnNotificationClickListener listener) {
+        this.listener = listener;
+    }
+
+    public NotificationData getNotification(int position) {
+        return list.get(position);
+    }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(@NonNull View itemView) {
@@ -36,7 +46,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-
+                    if(listener != null) {
+                        int pos = getBindingAdapterPosition();
+                        listener.onItemClick(ViewHolder.this, v, pos);
+                    }
                 }
             });
         }
@@ -69,4 +82,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         return list.size();
     }
 
+    @Override
+    public void onItemClick(ViewHolder holder, View view, int position) {
+        if(listener != null) {
+            listener.onItemClick(holder, view, position);
+        }
+    }
 }
