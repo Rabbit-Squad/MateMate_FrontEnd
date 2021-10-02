@@ -46,6 +46,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
     MyPostFragment myPostFragment = new MyPostFragment();
     SettingFragment settingFragment = new SettingFragment();
+    RequestNotification requestNotification = new RequestNotification();
 
     private ServiceApi serviceApi;
     Gson gson = new GsonBuilder().setDateFormat("HH:mm:ss").create();
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, myPostFragment).commit();
                 }
                 if(menuItem.getItemId() == R.id.notifications) {
-
+                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, requestNotification).commit();
                 }
                 if(menuItem.getItemId() == R.id.setting) {
                     getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, settingFragment).commit();

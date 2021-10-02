@@ -8,6 +8,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 public interface ServiceApi {
@@ -35,4 +36,10 @@ public interface ServiceApi {
 
     @DELETE("profile/delete/{userIdx}")
     Call<DeleteResponse> deleteUser(@Path("userIdx") int userIdx);
+
+    @GET("/request/mypost/{userIdx}")
+    Call<NotificationResponse> getNotification(@Path("userIdx")int userIdx);
+
+    @POST("/approval/{reqIdx}")
+    Call<JoinResponse> approve(@Path("reqIdx") int reqIdx);
 }

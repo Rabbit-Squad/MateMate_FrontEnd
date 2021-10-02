@@ -32,6 +32,7 @@ import retrofit2.Response;
 public class MyPostFragment extends Fragment implements OnBackPressedListener{
 
     ServiceApi serviceApi= RetrofitClient.getClient().create(ServiceApi.class);
+    RequestNotification requestNotification = new RequestNotification();
     RecyclerView recyclerView;
     DrawerLayout drawer;
     NavigationView detailMenu;
@@ -74,10 +75,10 @@ public class MyPostFragment extends Fragment implements OnBackPressedListener{
 
                 }
                 if(menuItem.getItemId() == R.id.notifications) {
-
+                    fragmentManager.beginTransaction().replace(getId(), requestNotification).commit();
                 }
                 if(menuItem.getItemId() == R.id.setting) {
-
+                    //fragmentManager.beginTransaction().replace()
                 }
                 drawer.closeDrawers();
                 return false;
