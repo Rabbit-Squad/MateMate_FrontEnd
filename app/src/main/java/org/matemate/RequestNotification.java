@@ -6,14 +6,20 @@ import android.content.SharedPreferences;
 import android.media.audiofx.NoiseSuppressor;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -31,11 +37,18 @@ public class RequestNotification extends Fragment implements OnBackPressedListen
     FragmentManager fragmentManager;
     NotificationDetailFragment fragment = new NotificationDetailFragment();
     ServiceApi serviceApi;
-    Button reject;
+    // Button reject;
     List<NotificationData> Data;
     NotificationAdapter adapter;
     RecyclerView recyclerView;
+/*
+    ImageView menu;
+    DrawerLayout drawer;
+    NavigationView detailMenu;
 
+    MyPostFragment myPostFragment = new MyPostFragment();
+    SettingFragment settingFragment = new SettingFragment();
+*/
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -46,7 +59,7 @@ public class RequestNotification extends Fragment implements OnBackPressedListen
 
     public void initUI(ViewGroup rootView) {
         fragmentManager = getActivity().getSupportFragmentManager();
-        reject = rootView.findViewById(R.id.approval_reject_btn);
+        // reject = rootView.findViewById(R.id.approval_reject_btn);
         recyclerView = rootView.findViewById(R.id.notification_list);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
@@ -80,8 +93,36 @@ public class RequestNotification extends Fragment implements OnBackPressedListen
                 t.printStackTrace();
             }
         });
+/*
+        detailMenu = rootView.findViewById(R.id.detail_menu);
+        drawer = rootView.findViewById(R.id.notification_layout);
+        menu = rootView.findViewById(R.id.notification_menu_button);
 
-
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                drawer.openDrawer(Gravity.LEFT);
+            }
+        });
+        detailMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                if(menuItem.getItemId() == R.id.my_posts) {
+                    // fragmentManager.beginTransaction().replace(getId(), myPostFragment).commit();
+                    System.out.println("1");
+                }
+                if(menuItem.getItemId() == R.id.notifications) {
+                    System.out.println("2");
+                }
+                if(menuItem.getItemId() == R.id.setting) {
+                    // fragmentManager.beginTransaction().replace(getId(), settingFragment).commit();
+                    System.out.println("3");
+                }
+                drawer.closeDrawers();
+                return false;
+            }
+        });
+        */
     }
 
 

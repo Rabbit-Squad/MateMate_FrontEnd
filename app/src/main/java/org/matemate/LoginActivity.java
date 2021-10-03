@@ -90,6 +90,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                         startActivityForResult(intent, REQUEST_CODE_MAIN);
+                        finish();
                     }
                     else if (result.getStatus() == 204) {
                         Toast.makeText(getApplicationContext(), result.getMessage(), Toast.LENGTH_SHORT).show();
