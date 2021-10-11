@@ -5,7 +5,9 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:clickable="true"
+    android:background="#92000000">
 
     <LinearLayout
         android:padding="10dp"

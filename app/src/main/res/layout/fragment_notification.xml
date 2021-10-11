@@ -1,37 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/notification_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:orientation="vertical"
     tools:context=".NotificationDetailFragment">
-
-    <LinearLayout
-        android:id="@+id/main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="#E86263">
-
-            <ImageView
-                android:id="@+id/notification_menu_button"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/menu_icon"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp">
-            </ImageView>
-        </LinearLayout>
 
         <FrameLayout
             android:id="@+id/fragment_content"
@@ -54,11 +30,3 @@
         </FrameLayout>
 
     </LinearLayout>
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/detail_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/detail_menu_item" />
-</androidx.drawerlayout.widget.DrawerLayout>

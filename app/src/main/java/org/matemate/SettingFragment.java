@@ -36,16 +36,9 @@ public class SettingFragment extends Fragment implements OnBackPressedListener {
     TextView settingNickname;
     FragmentManager fragmentManager;
 
-    ImageView menu;
-    DrawerLayout drawer;
-    NavigationView detailMenu;
-
     ServiceApi serviceApi;
 
     int userIdx;
-
-    MyPostFragment myPostFragment = new MyPostFragment();
-    RequestNotification requestNotification = new RequestNotification();
 
     @Nullable
     @Override
@@ -65,12 +58,6 @@ public class SettingFragment extends Fragment implements OnBackPressedListener {
         settingImg = rootView.findViewById(R.id.setting_profileImg);
         settingId = rootView.findViewById(R.id.setting_id);
         settingNickname = rootView.findViewById(R.id.setting_nickname);
-
-        detailMenu = rootView.findViewById(R.id.detail_menu);
-        drawer = rootView.findViewById(R.id.setting_layout);
-        menu = rootView.findViewById(R.id.setting_menu_button);
-
-
         serviceApi = RetrofitClient.getClient().create(ServiceApi.class);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
@@ -104,28 +91,6 @@ public class SettingFragment extends Fragment implements OnBackPressedListener {
             }
         });
 
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawer.openDrawer(Gravity.LEFT);
-            }
-        });
-        detailMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.my_posts) {
-                    fragmentManager.beginTransaction().replace(getId(), myPostFragment).commit();
-                }
-                if(menuItem.getItemId() == R.id.notifications) {
-                    fragmentManager.beginTransaction().replace(getId(), requestNotification).commit();
-                }
-                if(menuItem.getItemId() == R.id.setting) {
-                    //fragmentManager.beginTransaction().replace()
-                }
-                drawer.closeDrawers();
-                return false;
-            }
-        });
     }
 
     public void startGetUserInfo(int idx) {
