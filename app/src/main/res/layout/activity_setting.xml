@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/setting_layout"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFFFF"
@@ -13,22 +13,6 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:id="@+id/header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="#E86263">
-
-            <ImageView
-                android:id="@+id/setting_menu_button"
-                android:layout_width="30dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="15dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp"
-                android:background="@drawable/menu_icon"></ImageView>
-        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -169,10 +153,4 @@
         </LinearLayout>
     </LinearLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/detail_menu"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        app:menu="@menu/detail_menu_item" />
-</androidx.drawerlayout.widget.DrawerLayout>
+</LinearLayout>
