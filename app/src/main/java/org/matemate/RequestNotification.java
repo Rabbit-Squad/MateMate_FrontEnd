@@ -41,14 +41,14 @@ public class RequestNotification extends Fragment implements OnBackPressedListen
     List<NotificationData> Data;
     NotificationAdapter adapter;
     RecyclerView recyclerView;
-/*
+
     ImageView menu;
     DrawerLayout drawer;
     NavigationView detailMenu;
 
-    MyPostFragment myPostFragment = new MyPostFragment();
-    SettingFragment settingFragment = new SettingFragment();
-*/
+//    MyPostFragment myPostFragment = new MyPostFragment();
+//    SettingFragment settingFragment = new SettingFragment();
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -79,7 +79,8 @@ public class RequestNotification extends Fragment implements OnBackPressedListen
                     adapter.setOnItemClickListener(new OnNotificationClickListener(){
                         @Override
                         public void onItemClick(NotificationAdapter.ViewHolder holder, View view, int position) {
-                            fragmentManager.beginTransaction().replace(R.id.fragment_content, fragment).commit();
+                            //fragmentManager.beginTransaction().replace(R.id.fragment_content, fragment).commit();
+                            ((MainActivity) getActivity()).viewChange(1);
                         }
                     });
                 } catch(Exception e) {
@@ -93,36 +94,36 @@ public class RequestNotification extends Fragment implements OnBackPressedListen
                 t.printStackTrace();
             }
         });
-/*
+
         detailMenu = rootView.findViewById(R.id.detail_menu);
         drawer = rootView.findViewById(R.id.notification_layout);
         menu = rootView.findViewById(R.id.notification_menu_button);
 
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawer.openDrawer(Gravity.LEFT);
-            }
-        });
-        detailMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.my_posts) {
-                    // fragmentManager.beginTransaction().replace(getId(), myPostFragment).commit();
-                    System.out.println("1");
-                }
-                if(menuItem.getItemId() == R.id.notifications) {
-                    System.out.println("2");
-                }
-                if(menuItem.getItemId() == R.id.setting) {
-                    // fragmentManager.beginTransaction().replace(getId(), settingFragment).commit();
-                    System.out.println("3");
-                }
-                drawer.closeDrawers();
-                return false;
-            }
-        });
-        */
+//        menu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                drawer.openDrawer(Gravity.LEFT);
+//            }
+//        });
+//        detailMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+//            @Override
+//            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+//                if(menuItem.getItemId() == R.id.my_posts) {
+//                    fragmentManager.beginTransaction().replace(getId(), myPostFragment).commit();
+//                    System.out.println("1");
+//                }
+//                if(menuItem.getItemId() == R.id.notifications) {
+//                    System.out.println("2");
+//                }
+//                if(menuItem.getItemId() == R.id.setting) {
+//                    fragmentManager.beginTransaction().replace(getId(), settingFragment).commit();
+//
+//                }
+//                drawer.closeDrawers();
+//                return false;
+//            }
+//        });
+
     }
 
 

@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     MyPostFragment myPostFragment = new MyPostFragment();
     SettingFragment settingFragment = new SettingFragment();
     RequestNotification requestNotification = new RequestNotification();
-
+    NotificationDetailFragment notificationDetailFragment = new NotificationDetailFragment();
     private ServiceApi serviceApi;
     Gson gson = new GsonBuilder().setDateFormat("HH:mm:ss").create();
     List<ListData> Lists;
@@ -135,13 +135,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 if(menuItem.getItemId() == R.id.my_posts) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, myPostFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, myPostFragment).commit();
                 }
                 if(menuItem.getItemId() == R.id.notifications) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, requestNotification).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, requestNotification).commit();
                 }
                 if(menuItem.getItemId() == R.id.setting) {
-                    getSupportFragmentManager().beginTransaction().replace(R.id.main_layout, settingFragment).commit();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, settingFragment).commit();
                 }
                 drawer.closeDrawers();
                 return false;
@@ -168,6 +168,13 @@ public class MainActivity extends AppCompatActivity {
             if(fragment instanceof OnBackPressedListener) {
                 ((OnBackPressedListener)fragment).onBackPressed();
             }
+        }
+    }
+
+    public void viewChange(int index) {
+        if(index == 1) {
+            System.out.println("adfadf");
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, notificationDetailFragment).commit();
         }
     }
 }

@@ -32,10 +32,7 @@ import retrofit2.Response;
 public class MyPostFragment extends Fragment implements OnBackPressedListener{
 
     ServiceApi serviceApi= RetrofitClient.getClient().create(ServiceApi.class);
-    RequestNotification requestNotification = new RequestNotification();
     RecyclerView recyclerView;
-    DrawerLayout drawer;
-    NavigationView detailMenu;
     ImageView menu;
     MyPostAdapter adapter;
     int userIdx;
@@ -48,8 +45,6 @@ public class MyPostFragment extends Fragment implements OnBackPressedListener{
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.fragment_myposts, container, false);
         fragmentManager = getActivity().getSupportFragmentManager();
         recyclerView = rootView.findViewById(R.id.my_post_list);
-        detailMenu = rootView.findViewById(R.id.detail_menu);
-        drawer = rootView.findViewById(R.id.my_posts_layout);
         menu = rootView.findViewById(R.id.menu_button);
         LinearLayoutManager manager = new LinearLayoutManager(this.getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
@@ -62,28 +57,6 @@ public class MyPostFragment extends Fragment implements OnBackPressedListener{
     private void initUI(ViewGroup rootView) {
         Lists = new ArrayList();
         Posts = new ArrayList();
-        menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawer.openDrawer(Gravity.LEFT);
-            }
-        });
-        detailMenu.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                if(menuItem.getItemId() == R.id.my_posts) {
-
-                }
-                if(menuItem.getItemId() == R.id.notifications) {
-                    fragmentManager.beginTransaction().replace(getId(), requestNotification).commit();
-                }
-                if(menuItem.getItemId() == R.id.setting) {
-                    //fragmentManager.beginTransaction().replace()
-                }
-                drawer.closeDrawers();
-                return false;
-            }
-        });
         getUserList();
     }
 
