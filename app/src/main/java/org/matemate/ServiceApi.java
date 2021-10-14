@@ -41,5 +41,5 @@ public interface ServiceApi {
     Call<NotificationResponse> getNotification(@Path("userIdx")int userIdx);
 
     @POST("/approval/{reqIdx}")
-    Call<JoinResponse> approve(@Path("reqIdx") int reqIdx);
+    Call<JoinResponse> approve(@Path("reqIdx") int reqIdx, @Body ApproveData data);
 }
