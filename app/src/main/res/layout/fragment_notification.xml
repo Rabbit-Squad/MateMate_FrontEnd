@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical"
-    tools:context=".NotificationDetailFragment">
+    tools:context=".RequestNotification">
 
         <FrameLayout
             android:id="@+id/fragment_content"

@@ -29,7 +29,6 @@ import retrofit2.Response;
 
 public class RequestNotification extends Fragment implements OnBackPressedListener {
     FragmentManager fragmentManager;
-    NotificationDetailFragment fragment = new NotificationDetailFragment();
     ServiceApi serviceApi;
     List<NotificationData> Data;
     NotificationAdapter adapter;
@@ -61,13 +60,14 @@ public class RequestNotification extends Fragment implements OnBackPressedListen
                     adapter = new NotificationAdapter(Data);
                     recyclerView.setAdapter(adapter);
                     adapter.notifyDataSetChanged();
+                    /*
                     adapter.setOnItemClickListener(new OnNotificationClickListener(){
                         @Override
                         public void onItemClick(NotificationAdapter.ViewHolder holder, View view, int position) {
-                            fragmentManager.beginTransaction().replace(R.id.notification_layout, fragment).commit();
-                            //((MainActivity) getActivity()).viewChange(1);
+
                         }
                     });
+                    */
                 } catch(Exception e) {
                     e.printStackTrace();
                 }
