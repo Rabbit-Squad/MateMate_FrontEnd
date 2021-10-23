@@ -9,15 +9,19 @@ public class NotificationData {
     @SerializedName("nickname")
     private String nickname;
 
+    @SerializedName("id")
+    private int id;
+
     @SerializedName("content")
     private String content;
 
     @SerializedName("arrive_time")
     private String arrive_time;
 
-    public NotificationData(String title, String nickname, String content, String arrive_time) {
+    public NotificationData(String title, String nickname, int id, String content, String arrive_time) {
         this.title = title;
         this.nickname = nickname;
+        this.id = id;
         this.content = content;
         this.arrive_time = arrive_time;
     }
@@ -37,4 +41,6 @@ public class NotificationData {
     public String getTitle() {
         return title;
     }
+
+    public int getId() { return id; }
 }
