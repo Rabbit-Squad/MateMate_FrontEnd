@@ -2,6 +2,7 @@ package org.matemate;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,7 +28,6 @@ public class LoginActivity extends AppCompatActivity {
     CheckBox remember_check;
     TextView createAccount;
     private ServiceApi serviceApi = RetrofitClient.getClient().create(ServiceApi.class);
-    ;
 
     public static final int REQUEST_CODE_CREATE_ACCOUNT = 101;
     public static final int REQUEST_CODE_MAIN = 201;
@@ -41,6 +42,31 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.login_btn);
         remember_check = findViewById(R.id.login_remember_account);
         createAccount = findViewById(R.id.login_sign_up);
+
+        // 자동 로그인 체크 여부 확인
+        SharedPreferences auto = getSharedPreferences("autoLogin", Activity.MODE_PRIVATE);
+        String savedId = auto.getString("userId", "");
+
+        if (!savedId.equals("")) {
+            // 저장된 로그인 정보가 있으면 알아서 로그인
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+            startActivityForResult(intent, REQUEST_CODE_MAIN);
+            finish();
+        }
+
+        // 체크박스 변화 감지
+        remember_check.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) {
+                    // 체크박스를 풀면 저장된 정보 없앰
+                    SharedPreferences auto = getSharedPreferences("autoLogin", Activity.MODE_PRIVATE);
+                    SharedPreferences.Editor autoLoginEdit = auto.edit();
+                    autoLoginEdit.clear();
+                    autoLoginEdit.commit();
+                }
+            }
+        });
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +111,15 @@ public class LoginActivity extends AppCompatActivity {
                         editor.putInt("userIdx", result.getUserIdx());
                         editor.putString("token", result.getToken());
                         editor.commit();
+
+                        if (remember_check.isChecked()) {
+                            // 자동 로그인이 체크되어 있을 시, 로그인 진행하며 아이디 비밀번호 정보 저장
+                            SharedPreferences auto = getSharedPreferences("autoLogin", Activity.MODE_PRIVATE);
+                            SharedPreferences.Editor autoLoginEdit = auto.edit();
+                            autoLoginEdit.putString("userId", idInput.getText().toString());
+                            autoLoginEdit.putString(("password"), pwInput.getText().toString());
+                            autoLoginEdit.commit();
+                        }
 
                         System.out.println("Try to open main Activity...");
 

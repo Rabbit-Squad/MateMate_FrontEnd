@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,8 +20,12 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     TextView nickname;
     TextView time;
     TextView contents;
+    Button approve_btn;
+    Button reject_btn;
+
     OnNotificationClickListener listener;
 
+    ServiceApi serviceApi = RetrofitClient.getClient().create(ServiceApi.class);
 
     public NotificationAdapter(List<NotificationData> list) {
         this.list = list;
@@ -42,6 +47,8 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
             nickname = itemView.findViewById(R.id.request_nickname);
             contents = itemView.findViewById(R.id.request_message);
             time = itemView.findViewById(R.id.request_time);
+            approve_btn = itemView.findViewById(R.id.request_approval_btn);
+            reject_btn = itemView.findViewById(R.id.request_reject_btn);
 
             itemView.setOnClickListener(new View.OnClickListener(){
                 @Override
@@ -72,9 +79,24 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
     }
 
     @Override
-    public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull NotificationAdapter.ViewHolder holder, final int position) {
         NotificationData data = list.get(position);
         holder.setNotification(data);
+
+        approve_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 요청에 대해 승인
+                ApproveData requestData = new ApproveData(1);
+            }
+        });
+
+        reject_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 요청에 대해 거절
+            }
+        });
     }
 
     @Override
@@ -87,5 +109,9 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
         if(listener != null) {
             listener.onItemClick(holder, view, position);
         }
+    }
+
+    public void startApproval(ApproveData data) {
+        // serviceApi.approve()
     }
 }
