@@ -88,41 +88,21 @@
 
                 <Spinner
                     android:id="@+id/edit_time"
-                    android:layout_width="wrap_content"
+                    android:layout_width="40dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="0.5"
                     android:textAlignment="center"
-                    android:background="@drawable/spinner_background"
-                    android:entries="@array/time"/>
+                    android:layout_marginRight="5dp"
+                    android:entries="@array/time_for_post"
+                    android:background="@drawable/spinner_background"/>
 
                 <TextView
+                    android:id="@+id/edit_time_limit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:layout_gravity="center_vertical"
-                    android:text="시"
-                    android:textColor="#000000" />
-
-                <Spinner
-                    android:id="@+id/edit_minute"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="0.5"
-                    android:textAlignment="center"
-                    android:background="@drawable/spinner_background"
-                    android:entries="@array/minute"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="10dp"
-                    android:layout_gravity="center_vertical"
-                    android:text="분"
-                    android:textColor="#000000" />
+                    android:text="분 이내 모임" />
 
             </LinearLayout>
 

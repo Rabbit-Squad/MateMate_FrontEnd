@@ -3,6 +3,7 @@
     package="org.matemate">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-sdk android:minSdkVersion="26" />
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"

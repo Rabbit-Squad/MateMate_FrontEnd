@@ -13,30 +13,29 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 public class EditFragment extends AppCompatActivity implements OnBackPressedListener {
 
     EditText title_input;
     TextView location_input;
+    Spinner time_input_spinner;
     EditText text_input;
-    Spinner hour;
-    Spinner minute;
     Spinner min_num_spinner;
     Button postBtn;
     String locations;
     FragmentManager fragmentManager;
     LocationFragment locationFragment = new LocationFragment();
     ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,17 +44,15 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
         fragmentManager = getSupportFragmentManager();
         title_input = findViewById(R.id.edit_title);
         location_input = findViewById(R.id.edit_location);
+        time_input_spinner = findViewById(R.id.edit_time);
         text_input = findViewById(R.id.edit_text);
         postBtn = findViewById(R.id.edit_submit_btn);
-        hour = findViewById(R.id.edit_time);
-        minute = findViewById(R.id.edit_minute);
         min_num_spinner = findViewById(R.id.edit_min_num);
         location_input.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 fragmentManager.beginTransaction().replace(R.id.container, locationFragment).commit();
             }
-
         });
 
         Intent intent = getIntent();
@@ -74,29 +71,26 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
 
                 int idx = sharedPreferences.getInt("userIdx", -1);
 
-                String _hour = hour.getSelectedItem().toString();
-                String _minute = minute.getSelectedItem().toString();
+                int _minute = Integer.parseInt(time_input_spinner.getSelectedItem().toString());
 
                 int _min_num = Integer.parseInt(min_num_spinner.getSelectedItem().toString());
 
-                String time = _hour + ":" + _minute + ":00";
+                LocalDateTime currentTime = LocalDateTime.now();
+                LocalDateTime targetTime = currentTime.plusMinutes(_minute);
+                String time = targetTime.format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss")).toString();
+                System.out.println(time);
 
                 NewPostData data = new NewPostData(idx, time, location_input.getText().toString(), _min_num, title_input.getText().toString(), text_input.getText().toString());
 
-//                if (location_input.getText().length() == 0 || locations == null || locations.length() == 0 || title_input.getText().toString() == null || text_input.getText().length() == 0 || text_input.getText().toString() == null) {
-//                    Toast.makeText(getApplicationContext(), "모든 정보를 기재해주세요", Toast.LENGTH_SHORT).show();
-//                }
-//                else {
-                    Intent intent = new Intent(EditFragment.this, MainActivity.class);
-                    intent.putExtra("userIdx", idx);
-                    intent.putExtra("time", time);
-                    intent.putExtra("location", location_input.getText().toString());
-                    intent.putExtra("min_num", _min_num);
-                    intent.putExtra("title", title_input.getText().toString());
-                    intent.putExtra("text", text_input.getText().toString());
-                    startPosting(data);
-                    startActivity(intent);
-//                }
+                Intent intent = new Intent(EditFragment.this, MainActivity.class);
+                intent.putExtra("userIdx", idx);
+                intent.putExtra("time", time);
+                intent.putExtra("location", location_input.getText().toString());
+                intent.putExtra("min_num", _min_num);
+                intent.putExtra("title", title_input.getText().toString());
+                intent.putExtra("text", text_input.getText().toString());
+                startPosting(data);
+                startActivity(intent);
             }
         });
     }
