@@ -25,7 +25,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class EditFragment extends AppCompatActivity implements OnBackPressedListener {
-
+    SharedPreferences sharedPreferences;
     EditText title_input;
     TextView location_input;
     Spinner time_input_spinner;
@@ -38,7 +38,8 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
     ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(@Nullable final Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_edit);
         fragmentManager = getSupportFragmentManager();
@@ -48,12 +49,29 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
         text_input = findViewById(R.id.edit_text);
         postBtn = findViewById(R.id.edit_submit_btn);
         min_num_spinner = findViewById(R.id.edit_min_num);
+
+        sharedPreferences = getSharedPreferences("Post", Context.MODE_PRIVATE);
+
         location_input.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v) {
-                fragmentManager.beginTransaction().replace(R.id.container, locationFragment).commit();
+            public void onClick(View v) { //장소 검색 눌렀을 경우
+                SharedPreferences.Editor editor = sharedPreferences.edit(); //그 전 상태 저장
+                editor.putString("title", title_input.getText().toString());
+                editor.putInt("time", time_input_spinner.getSelectedItemPosition());
+                editor.putInt("minNum", min_num_spinner.getSelectedItemPosition());
+                editor.putString("content", text_input.getText().toString());
+                editor.commit();
+                fragmentManager.beginTransaction().add(R.id.container, locationFragment).commit();
             }
         });
+
+        title_input.setText(sharedPreferences.getString("title", ""));
+        min_num_spinner.setSelection(sharedPreferences.getInt("minNum", 0));
+        time_input_spinner.setSelection(sharedPreferences.getInt("time", 0));
+        text_input.setText(sharedPreferences.getString("content", ""));
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.clear();
+        editor.commit();
 
         Intent intent = getIntent();
         try {
@@ -67,7 +85,7 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
 
                 int idx = sharedPreferences.getInt("userIdx", -1);
 
