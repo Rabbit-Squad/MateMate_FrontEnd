@@ -21,13 +21,11 @@ import retrofit2.Response;
 
 public class LocationFragment extends Fragment implements OnBackPressedListener {
     EditText locationInput;
-    EditFragment editFragment;
     List<Location> locations; // adapter에 넣을 배열.
     List<org.matemate.Place> placeList; //kakaoAPI로 받아온 placeList저장
     RecyclerView recyclerView;
     LocationAdapter adapter;
     KakaoAPI kakaoAPI;
-    FragmentManager fragmentManager;
     private final static String APP_KEY = BuildConfig.app_key;
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -36,7 +34,6 @@ public class LocationFragment extends Fragment implements OnBackPressedListener 
         LinearLayoutManager manager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager); // 레이아웃 매니저 설정
         locationInput = rootView.findViewById(R.id.location_input);
-        fragmentManager = getActivity().getSupportFragmentManager();
         kakaoAPI = KakaoRetrofit.searchLocation().create(KakaoAPI.class);
 
         locationInput.addTextChangedListener(new TextWatcher() {
@@ -60,7 +57,6 @@ public class LocationFragment extends Fragment implements OnBackPressedListener 
 
     private void searchLocation() {
         String address = locationInput.getText().toString();
-
         kakaoAPI.searchLocation(APP_KEY, address).enqueue(new Callback<LocationResponse>() {
             @Override
             public void onResponse(Call<LocationResponse> call, Response<LocationResponse> response) {
@@ -82,7 +78,7 @@ public class LocationFragment extends Fragment implements OnBackPressedListener 
                 adapter.setOnItemClickListener(new OnLocationClickListener() {
                     @Override
                     public void onItemClick(LocationAdapter.ViewHolder holder, View view, int position) {
-                        editFragment = new EditFragment();
+
                         Location location = adapter.getLocation(position);
                         String detail = location.getDetail();
                         String placeName = location.getPlaceName();
@@ -107,8 +103,8 @@ public class LocationFragment extends Fragment implements OnBackPressedListener 
 
     @Override
     public void onBackPressed() {
-        fragmentManager.beginTransaction().remove(LocationFragment.this).commit();
-        fragmentManager.popBackStack();
-    }
+        getActivity().getSupportFragmentManager().beginTransaction().remove(LocationFragment.this).commit();
+        getActivity().getSupportFragmentManager().popBackStack();
+}
 
 }
