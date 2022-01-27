@@ -4,39 +4,23 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -48,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
     SettingFragment settingFragment = new SettingFragment();
     RequestNotification requestNotification = new RequestNotification();
     private ServiceApi serviceApi;
-    Gson gson = new GsonBuilder().setDateFormat("HH:mm:ss").create();
+
     List<ListData> Lists;
     List<Post> Posts;
     PostAdapter adapter;
@@ -80,14 +64,13 @@ public class MainActivity extends AppCompatActivity {
                         Posts.add(new Post(Lists.get(i).getId(), Lists.get(i).getNickname(), Lists.get(i).getDeadline().toString(), Lists.get(i).getLocation(), Lists.get(i).getMin_num() + 1, Lists.get(i).getCur_num(), Lists.get(i).getTitle(), Lists.get(i).getContent(), Lists.get(i).getClosed()));
                     }
                     Collections.reverse(Posts);
-                    adapter = new PostAdapter(getApplicationContext(), Posts); //adapter설정 + itemCount도 7인것 확인.
+                    adapter = new PostAdapter(getApplicationContext(), Posts);
                     recyclerView.setAdapter(adapter);
 
-                    adapter.setOnItemClickListener(new OnPostItemClickListener() {
+                    adapter.setOnPostParticipateListener(new OnPostParticipateListener() {
                         @Override
-                        public void onItemClick(PostAdapter.ViewHolder holder, View view, int position) {
+                        public void onPostParticipateClick(PostAdapter.ViewHolder holder, View view, int position) {
                             Post post = adapter.getPost(position);
-                            //Toast.makeText(getApplicationContext(), "게시물 선택:" + post.getTitle(), Toast.LENGTH_SHORT).show();
 
                             ParticipateFragment fragment = new ParticipateFragment();
 
@@ -104,9 +87,6 @@ public class MainActivity extends AppCompatActivity {
                             item.putInt("id", post.getId());
                             fragment.setArguments(item);
                         }
-
-                        @Override
-                        public void onItemClick(MyPostAdapter.ViewHolder holder, View view, int position) { }
                     });
 
                     adapter.notifyDataSetChanged();
