@@ -82,12 +82,17 @@ public class LocationFragment extends Fragment implements OnBackPressedListener 
                         Location location = adapter.getLocation(position);
                         String detail = location.getDetail();
                         String placeName = location.getPlaceName();
-
-                        Intent intent = new Intent(getContext(), EditFragment.class);
+                        Intent intent;
+                        String change = getContext().getClass().getSimpleName();
+                        if(change.equals("EditFragment")) {
+                            intent = new Intent(getContext(), EditFragment.class);
+                        }
+                        else {
+                            intent = new Intent(getContext(), ParticipateActivity.class);
+                        }
                         intent.putExtra("detail", detail);
                         intent.putExtra("placeName", placeName);
                         startActivity(intent);
-
                     }
                 });
                 adapter.notifyDataSetChanged();

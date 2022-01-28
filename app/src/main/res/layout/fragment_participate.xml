@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
+    android:background="#FFFFFF"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+<LinearLayout
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:layout_gravity="center"
@@ -10,7 +16,7 @@
     android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ParticipateFragment">
+    tools:context=".ParticipateActivity">
 
     <!-- 신청 대상 글 세부 정보 -->
 
@@ -246,3 +252,4 @@
     </LinearLayout>
 
 </LinearLayout>
+</FrameLayout>

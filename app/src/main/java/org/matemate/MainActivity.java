@@ -72,21 +72,29 @@ public class MainActivity extends AppCompatActivity {
                         @Override
                         public void onPostParticipateClick(PostAdapter.ViewHolder holder, View view, int position) {
                             Post post = adapter.getPost(position);
+                            Intent intent = new Intent(MainActivity.this, ParticipateActivity.class);
+                            intent.putExtra("nickname", post.getNickname());
+                            intent.putExtra("title", post.getTitle());
+                            intent.putExtra("location", post.getLocation());
+                            intent.putExtra("cur_num", post.getCur_num());
+                            intent.putExtra("min_num", post.getMin_num());
+                            intent.putExtra("contents", post.getContent());
+                            intent.putExtra("id", post.getId());
+                            startActivity(intent);
 
-                            ParticipateFragment fragment = new ParticipateFragment();
 
-                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment).commit();
-
-                            //Fragment에 보낼 번들
-                            Bundle item = new Bundle();
-                            item.putString("nickname", post.getNickname());
-                            item.putString("title", post.getTitle());
-                            item.putString("location", post.getLocation());
-                            item.putInt("cur_num", post.getCur_num());
-                            item.putInt("min_num", post.getMin_num());
-                            item.putString("contents", post.getContent());
-                            item.putInt("id", post.getId());
-                            fragment.setArguments(item);
+//                            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_content, fragment).commit();
+//
+//                            //Fragment에 보낼 번들
+//                            Bundle item = new Bundle();
+//                            item.putString("nickname", post.getNickname());
+//                            item.putString("title", post.getTitle());
+//                            item.putString("location", post.getLocation());
+//                            item.putInt("cur_num", post.getCur_num());
+//                            item.putInt("min_num", post.getMin_num());
+//                            item.putString("contents", post.getContent());
+//                            item.putInt("id", post.getId());
+//                            fragment.setArguments(item);
                         }
                     });
 
@@ -156,6 +164,8 @@ public class MainActivity extends AppCompatActivity {
         }
         else {
             finish();
+            System.runFinalization();
+            System.exit(0);
         }
     }
 }

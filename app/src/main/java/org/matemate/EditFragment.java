@@ -137,8 +137,9 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+        finish();
+//        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+//        startActivity(intent);
     }
 
 }
