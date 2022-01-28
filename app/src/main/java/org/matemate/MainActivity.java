@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     SettingFragment settingFragment = new SettingFragment();
     RequestNotification requestNotification = new RequestNotification();
     private ServiceApi serviceApi;
+    private long time = 0;
 
     List<ListData> Lists;
     List<Post> Posts;
@@ -147,6 +148,14 @@ public class MainActivity extends AppCompatActivity {
             if(fragment instanceof OnBackPressedListener) {
                 ((OnBackPressedListener)fragment).onBackPressed();
             }
+        }
+
+        if(System.currentTimeMillis() - time >= 1500) {
+            time = System.currentTimeMillis();
+            Toast.makeText(getApplicationContext(), "종료하시려면 한번 더 눌러주세요!", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            finish();
         }
     }
 }
