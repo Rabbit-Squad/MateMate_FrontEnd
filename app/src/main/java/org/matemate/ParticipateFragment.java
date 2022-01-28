@@ -38,6 +38,8 @@ public class ParticipateFragment extends Fragment implements OnBackPressedListen
     Button participate_btn;
     Button cancel_btn;
 
+    SharedPreferences requestSharedPreferences; //request를 위한 sharedPreference
+    LocationFragment locationFragment = new LocationFragment();
     ServiceApi service = RetrofitClient.getClient().create(ServiceApi.class);
     FragmentManager fragmentManager;
     int postidx;
@@ -50,6 +52,7 @@ public class ParticipateFragment extends Fragment implements OnBackPressedListen
         initUI(rootView);
 
         fragmentManager = getActivity().getSupportFragmentManager();
+        requestSharedPreferences = getActivity().getSharedPreferences("Request", Context.MODE_PRIVATE);
 
         //Bundle로 받아온 데이터 세팅
         setPostToUI();
@@ -75,6 +78,23 @@ public class ParticipateFragment extends Fragment implements OnBackPressedListen
         SharedPreferences sharedPreferences = getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
         final int userIdx = sharedPreferences.getInt("userIdx", -1);
 
+        participate_location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SharedPreferences.Editor editor = requestSharedPreferences.edit(); //그 전 상태 저장
+                editor.putString("time", time.getText().toString());
+                editor.putString("content", participate_message.getText().toString());
+                editor.commit();
+                System.out.println("눌리고 있답니다");
+                fragmentManager.beginTransaction().add(R.id.container, locationFragment).commit();
+            }
+        });
+
+//        time.setText(requestSharedPreferences.getString("time", "10"));
+//        participate_message.setText(requestSharedPreferences.getString("content", ""));
+//        SharedPreferences.Editor editor = requestSharedPreferences.edit();
+//        editor.clear();
+//        editor.commit();
 
         //button 설정
         participate_btn.setOnClickListener(new View.OnClickListener() {
