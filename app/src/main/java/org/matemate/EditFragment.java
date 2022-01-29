@@ -85,30 +85,42 @@ public class EditFragment extends AppCompatActivity implements OnBackPressedList
         postBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
+                // 빠진 데이터 있는지 검사
+                boolean isFilledAllData = (
+                        title_input.length() != 0
+                        && text_input.length() != 0
+                        && location_input.length() != 0
+                        );
 
-                int idx = sharedPreferences.getInt("userIdx", -1);
+                if (!isFilledAllData) {
+                    Toast.makeText(EditFragment.this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
 
-                int _minute = Integer.parseInt(time_input_spinner.getSelectedItem().toString());
+                    int idx = sharedPreferences.getInt("userIdx", -1);
 
-                int _min_num = Integer.parseInt(min_num_spinner.getSelectedItem().toString());
+                    int _minute = Integer.parseInt(time_input_spinner.getSelectedItem().toString());
 
-                LocalDateTime currentTime = LocalDateTime.now();
-                LocalDateTime targetTime = currentTime.plusMinutes(_minute);
-                String time = targetTime.format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss")).toString();
-                System.out.println(time);
+                    int _min_num = Integer.parseInt(min_num_spinner.getSelectedItem().toString());
 
-                NewPostData data = new NewPostData(idx, time, location_input.getText().toString(), _min_num, title_input.getText().toString(), text_input.getText().toString());
+                    LocalDateTime currentTime = LocalDateTime.now();
+                    LocalDateTime targetTime = currentTime.plusMinutes(_minute);
+                    String time = targetTime.format(DateTimeFormatter.ofPattern("yy-MM-dd HH:mm:ss")).toString();
+                    System.out.println(time);
 
-                Intent intent = new Intent(EditFragment.this, MainActivity.class);
-                intent.putExtra("userIdx", idx);
-                intent.putExtra("time", time);
-                intent.putExtra("location", location_input.getText().toString());
-                intent.putExtra("min_num", _min_num);
-                intent.putExtra("title", title_input.getText().toString());
-                intent.putExtra("text", text_input.getText().toString());
-                startPosting(data);
-                startActivity(intent);
+                    NewPostData data = new NewPostData(idx, time, location_input.getText().toString(), _min_num, title_input.getText().toString(), text_input.getText().toString());
+
+                    Intent intent = new Intent(EditFragment.this, MainActivity.class);
+                    intent.putExtra("userIdx", idx);
+                    intent.putExtra("time", time);
+                    intent.putExtra("location", location_input.getText().toString());
+                    intent.putExtra("min_num", _min_num);
+                    intent.putExtra("title", title_input.getText().toString());
+                    intent.putExtra("text", text_input.getText().toString());
+                    startPosting(data);
+                    startActivity(intent);
+                }
             }
         });
     }

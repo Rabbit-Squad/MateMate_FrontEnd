@@ -132,8 +132,20 @@ public class ParticipateActivity extends AppCompatActivity implements OnBackPres
         participate_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RequestData data = new RequestData(userIdx, participate_message.getText().toString(), time.getText().toString());
-                startParticipate(postIdx, data);
+                boolean isFilledAllData = (
+                        participate_message.length() != 0
+                        && participate_location.length() != 0
+                        && time.length() != 0
+                        );
+                if (!isFilledAllData) {
+                    Toast.makeText(ParticipateActivity.this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    /*
+                    RequestData data = new RequestData(userIdx, participate_message.getText().toString(), time.getText().toString());
+                    startParticipate(postIdx, data);
+                    */
+                }
             }
         });
 
