@@ -16,7 +16,7 @@
     android:gravity="center_horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ParticipateActivity">
+    tools:context=".Participate.ParticipateActivity">
 
     <!-- 신청 대상 글 세부 정보 -->
 

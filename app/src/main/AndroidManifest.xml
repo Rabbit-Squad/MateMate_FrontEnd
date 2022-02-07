@@ -12,18 +12,18 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".Home.MainActivity">
         </activity>
-        <activity android:name=".SignUpActivity"/>
-        <activity android:name=".EditFragment"/>
-        <activity android:name=".ParticipateActivity"/>
+        <activity android:name=".Join.JoinActivity"/>
+        <activity android:name=".WritePost.EditFragment"/>
+        <activity android:name=".Participate.ParticipateActivity"/>
         <meta-data
             android:name="server_url"
             android:value="app.BuildConfig.server_url">
